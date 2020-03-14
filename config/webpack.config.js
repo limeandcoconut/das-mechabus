@@ -67,6 +67,10 @@ const config = {
     ],
   },
   plugins: [
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
+      'process.env.USE_PROD_API': process.env.USE_PROD_API,
+    }),
     new CaseSensitivePathsPlugin(),
     new VueLoaderPlugin(),
     new HTMLPlugin({
@@ -209,7 +213,6 @@ if (isProd) {
       host: productionHost,
       filePath: path.join('proxy_to_site_root', 'robots.txt'),
     }),
-
   )
 } else {
   config.devtool = 'cheap-module-eval-source-map'
