@@ -3,7 +3,7 @@ const isProd = require('../client/utils').isProd()
 module.exports = {
   productionHost: 'https://das-mechabus.jacobsmith.tech',
   frontendPort: 3015,
-  apiEndpoint: isProd ? 'http://10.0.0.4' : `http://localhost:3998`,
+  apiEndpoint: isProd || !process.env.USE_PROD_API ? 'http://10.0.0.4' : `http://localhost:3998`,
   gaDevelopmentId: '',
   gaProductionId: '',
   controllers: {

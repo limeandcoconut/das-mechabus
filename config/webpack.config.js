@@ -22,10 +22,10 @@ const Visualizer = require('webpack-visualizer-plugin')
 const siteMeta = require('./meta.config.js')
 const { productionHost } = require('../config/config.js')
 
-const isProduction = require('../client/utils').isProd()
+const isProd = require('../client/utils').isProd()
 
 const config = {
-  mode: isProduction ? 'production' : 'development',
+  mode: isProd ? 'production' : 'development',
   entry: {
     app: './client/entry-client.js',
   },
@@ -52,7 +52,7 @@ const config = {
           {
             loader: 'css-loader',
             options: {
-              sourceMap: !isProduction,
+              sourceMap: !isProd,
             },
           },
           {
@@ -93,7 +93,7 @@ const config = {
   },
 }
 
-if (isProduction) {
+if (isProd) {
   // This automatically takes care of vendor splitting
   config.optimization.splitChunks = {
     cacheGroups: {
