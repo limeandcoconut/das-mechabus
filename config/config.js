@@ -7,10 +7,10 @@ module.exports = {
   apiEndpoint: isProd || process.env.USE_PROD_API ? 'http://10.0.0.4:3998' : `http://localhost:3998`,
   gaDevelopmentId: '',
   gaProductionId: '',
-  controllers: {
-    kitchen: {
+  controllers: [
+    {
+      name: 'kitchen',
       id: 'swi2.1',
-      action: 'toggle',
     },
-  },
+  ],
 }

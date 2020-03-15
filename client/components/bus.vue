@@ -1,39 +1,83 @@
 <template>
-  <div class="bus">
+  <Loading
+  v-if="!loaded"
+  />
+  <div v-else
+  class="bus">
     <div class="container">
       <Room
+      :state="0"
       class="books"/>
       <Room
+      :state="0"
       class="bed"/>
       <Room
+      :state="0"
       class="bath"/>
       <Room
       class="kitchen"
+      :state="roomState('kitchen')"
       @click.native="() => toggleController('kitchen')"/>
       <Room
+      :state="0"
       class="living"/>
     </div>
   </div>
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapState, mapGetters, mapMutations } from 'vuex'
 import Room from './room.vue'
-import { controllers } from '../../config/config'
+import Loading from './loading.vue'
 
 export default {
   name: 'bus',
 
   components: {
     Room,
+    Loading,
+  },
+
+  data() {
+    return {
+      loaded: false,
+    }
+  },
+
+  computed: {
+    ...mapState([
+      'controllers',
+      'nameToIdMap',
+    ]),
+
+    ...mapGetters(['initPromise']),
+  },
+
+  async mounted() {
+    await this.initPromise
+    console.log('loaded')
+    this.loaded = true
   },
 
   methods: {
-    toggleController(room) {
-      this.postController(controllers[room])
+
+    roomState(room) {
+      const id = this.nameToIdMap[room]
+      console.log(this.controllers[id].state)
+      return this.controllers[id].state
     },
 
-    ...mapActions(['showError', 'postController']),
+    toggleController(room) {
+      const id = this.nameToIdMap[room]
+      this.postController({ id, toggle: 1 })
+    },
+
+    ...mapMutations(['setControllerState']),
+
+    ...mapActions([
+      'showError',
+      'postController',
+    ]),
   },
 }
 </script>

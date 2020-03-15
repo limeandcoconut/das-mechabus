@@ -21,6 +21,8 @@ export default () => {
     ...App,
   })
 
+  store.commit('setInitPromise', store.dispatch('initControllers'))
+
   return {
     app,
     router,

@@ -1,10 +1,19 @@
 <template>
-  <div class="room"/>
+  <div
+  class="room"
+  :class="{lit: state}"/>
 </template>
 
 <script>
 export default {
   name: 'room',
+
+  props: {
+    state: {
+      type: Number,
+      required: true,
+    },
+  },
 }
 </script>
 
@@ -31,6 +40,19 @@ export default {
     transition: opacity .2s ease-in-out;
   }
 
+  &:after {
+    content: ' ';
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: @light;
+    opacity: 0;
+    transition: opacity .2s ease-in-out;
+  }
+
   &:first-of-type {
     border-left: 2px solid @old-blue;
     border-top-left-radius: .basis(2)[];
@@ -45,7 +67,23 @@ export default {
 
   &:hover {
     &:before {
+      opacity: 0;
+    }
+
+    &:after {
       opacity: 1;
+    }
+  }
+
+  &.lit {
+    &:hover {
+      &:before {
+        opacity: 1;
+      }
+
+      &:after {
+        opacity: 0;
+      }
     }
   }
 }
