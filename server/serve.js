@@ -61,7 +61,7 @@ if (isDevelopment) {
       fontSrc: [...contentSelf, ...contentFonts],
       imgSrc: [...contentSelf, ...contentAnalytics],
       prefetchSrc: [...contentSelf, ...contentFonts],
-      connectSrc: [...contentSelf, ...contentAnalytics, ...contentFonts],
+      connectSrc: [...contentSelf, ...contentAnalytics, ...contentFonts, '10.0.0.4'],
       // TODO: Add a report URI if you like
       // reportUri
     },
