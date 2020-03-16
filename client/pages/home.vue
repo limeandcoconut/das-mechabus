@@ -62,7 +62,7 @@ export default {
       ],
     }
     if (isProd()) {
-      meta.links.push({ rel: 'manifest', href: manifest })
+      meta.link.push({ rel: 'manifest', href: manifest })
     }
     return meta
   },
