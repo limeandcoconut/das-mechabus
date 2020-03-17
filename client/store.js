@@ -1,6 +1,12 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { apiEndpoint, controllers as configControllers } from '../config/config'
+import {
+  apiHost,
+  wsProtocol,
+  wsPort,
+  controllers as configControllers,
+} from '../config/config'
+import { sleep } from './utils'
 
 Vue.use(Vuex)
 
@@ -11,6 +17,7 @@ const store = {
     controllers: {},
     initPromise: null,
     nameToIdMap: {},
+    socket: null,
   },
 
   getters: {
@@ -49,6 +56,10 @@ const store = {
     setNameToIdMap(state, nameToIdMap) {
       state.nameToIdMap = nameToIdMap
     },
+
+    setSocket(state, socket) {
+      state.socket = socket
+    },
   },
 
   actions: {
@@ -60,45 +71,106 @@ const store = {
       commit('hideError')
     },
 
-    postController: async ({ state, commit }, payload) => {
-      const data = await (await fetch(apiEndpoint, {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(payload),
-      })).json()
-
-      console.log(data)
-      const controller = state.controllers[payload.id]
-      controller.state = data.state
-      controller.milliseconds = data.milliseconds
-      controller.button = data.button
-      commit('setController', { name, controller })
+    manageSocket: async ({ state: { socket }, dispatch, commit }, retryAttepts = 5) => {
+      if (socket.readyState === WebSocket.OPEN) {
+        return
+      }
+      if (socket.readyState === WebSocket.CLOSED || socket.readyState === WebSocket.CLOSING) {
+        commit('showError', 'Connection closed. Retrying...')
+        await dispatch('initialize')
+        return
+      }
+      if (socket.readyState === WebSocket.CONNECTING) {
+        if (retryAttepts > 0) {
+          console.log('retry')
+          commit('showError', 'Connecting...')
+          await sleep(1000)
+          await dispatch('manageSocket', retryAttepts - 1)
+        }
+        socket.close()
+        commit('showError', 'Connection failed.')
+      }
     },
 
-    initControllers: async ({ commit }) => {
+    refreshControllers: async ({ state: { socket }, dispatch }) => {
+      if (!await dispatch('manageSocket')) {
+        return false
+      }
+      socket.send(JSON.stringify({
+        type: 'refresh',
+      }))
+    },
 
-      let controllers = (await Promise.all(
-        configControllers.map(async ({ name, id }) => {
-          const data = await (await fetch(`${apiEndpoint}/?id=${id}`, { method: 'GET' })).json()
-          data.id = id
-          data.name = name
-          return data
-        }),
-      )).reduce((controllers, data) => {
-        controllers[data.id] = data
-        return controllers
-      }, {})
+    askController: async ({ state: { socket }, dispatch }, payload) => {
+      if (!await dispatch('manageSocket')) {
+        return false
+      }
+      socket.send(JSON.stringify({
+        type: 'get',
+        data: payload,
+      }))
+    },
 
-      commit('setNameToIdMap', configControllers.reduce((map, { name, id }) => {
-        map[name] = id
-        return map
-      }, {}))
+    tellController: async ({ state: { socket }, dispatch }, payload) => {
+      if (!await dispatch('manageSocket')) {
+        return false
+      }
+      socket.send(JSON.stringify({
+        type: 'set',
+        data: payload,
+      }))
+    },
 
-      console.log(controllers)
-      commit('setControllers', controllers)
+    initialize: async ({ state, commit }) => {
+      console.log('init')
+      const socket = new WebSocket(`${wsProtocol}${apiHost}:${wsPort}`)
+
+      const nameToIdMap = {}
+      const idToNameMap = {}
+
+      for (const { name, id } of configControllers) {
+        nameToIdMap[name] = id
+        idToNameMap[id] = name
+      }
+
+      commit('setNameToIdMap', nameToIdMap)
+
+      socket.addEventListener('open', () => {
+        commit('setSocket', socket)
+      })
+
+      let resolveInitPromse
+      commit('setInitPromise', new Promise((resolve) => {
+        resolveInitPromse = resolve
+      }))
+
+      socket.addEventListener('message', ({ data: message }) => {
+        const { type, data } = JSON.parse(message)
+        console.log(type, data)
+        if (type === 'update') {
+          for (const { id, state: lightState, milliseconds, button } of data) {
+            let controller = state.controllers[id]
+            if (!controller) {
+              controller = {
+                name: idToNameMap[id],
+                id,
+              }
+            }
+            controller.state = lightState
+            controller.milliseconds = milliseconds
+            controller.button = button
+            commit('setController', controller)
+          }
+          console.log('updated')
+
+          if (resolveInitPromse) {
+            resolveInitPromse()
+            console.log('resolved')
+            resolveInitPromse = null
+          }
+        }
+      })
+
     },
   },
 }

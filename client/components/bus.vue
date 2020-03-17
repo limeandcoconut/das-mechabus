@@ -76,20 +76,19 @@ export default {
 
     roomState(room) {
       const id = this.nameToIdMap[room]
-      console.log(this.controllers[id].state)
       return this.controllers[id].state
     },
 
     toggleController(room) {
       const id = this.nameToIdMap[room]
-      this.postController({ id, toggle: 1 })
+      this.tellController({ id, toggle: 1 })
     },
 
     ...mapMutations(['setControllerState']),
 
     ...mapActions([
       'showError',
-      'postController',
+      'tellController',
     ]),
   },
 }

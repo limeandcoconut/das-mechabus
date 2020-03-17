@@ -4,7 +4,12 @@ const isProd = require('../client/utils').isProd()
 module.exports = {
   productionHost: 'https://das-mechabus.jacobsmith.tech',
   frontendPort: 3015,
-  apiEndpoint: isProd || process.env.USE_PROD_API ? 'http://10.0.0.4:3998' : `http://localhost:3998`,
+  // TODO: move to https
+  httpProtocol: isProd || process.env.USE_PROD_API ? 'http://' : 'http://',
+  apiHost: isProd || process.env.USE_PROD_API ? '10.0.0.4' : 'localhost',
+  httpPort: 3998,
+  wsProtocol: isProd || process.env.USE_PROD_API ? 'ws://' : 'ws://',
+  wsPort: 3535,
   gaDevelopmentId: '',
   gaProductionId: '',
   controllers: [

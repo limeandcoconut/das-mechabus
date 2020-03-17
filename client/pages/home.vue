@@ -1,6 +1,14 @@
 <template>
   <div class="layout">
-    <div class="header">Das Mechabus</div>
+    <div class="header">
+      Das Mechabus
+      <button
+        class="refresh"
+        type="button"
+        @click="refreshControllers">
+        refresh
+      </button>
+    </div>
     <Bus class="bus"/>
   </div>
 </template>
@@ -21,6 +29,7 @@ import {
 } from '../../config/meta.config'
 import Bus from '../components/bus.vue'
 import { isProd } from '../utils'
+import { mapActions } from 'vuex'
 
 export default {
   name: 'home',
@@ -65,6 +74,10 @@ export default {
       meta.link.push({ rel: 'manifest', href: manifest })
     }
     return meta
+  },
+
+  methods: {
+    ...mapActions(['refreshControllers']),
   },
 }
 </script>

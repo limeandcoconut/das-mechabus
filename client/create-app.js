@@ -21,7 +21,7 @@ export default () => {
     ...App,
   })
 
-  store.commit('setInitPromise', store.dispatch('initControllers'))
+  store.dispatch('initialize')
 
   return {
     app,
