@@ -3,7 +3,9 @@
   v-if="!loaded"
   />
   <div v-else
-  class="bus">
+  class="bus"
+  ref="bus"
+  :style="ratioStyles">
     <div class="container">
       <Room
       :state="0"
@@ -29,6 +31,7 @@
 import { mapActions, mapState, mapGetters, mapMutations } from 'vuex'
 import Room from './room.vue'
 import Loading from './loading.vue'
+import { isIOSDevice } from 'ios-detector'
 
 export default {
   name: 'bus',
@@ -41,6 +44,7 @@ export default {
   data() {
     return {
       loaded: false,
+      ratioStyles: null,
     }
   },
 
@@ -55,8 +59,17 @@ export default {
 
   async mounted() {
     await this.initPromise
+
     console.log('loaded')
     this.loaded = true
+
+    if (isIOSDevice()) {
+      console.log('IOS detected; falling back to JS ratio management.')
+      this.$nextTick(() => {
+        const width = this.$refs.bus.clientWidth
+        this.ratioStyles = `height: ${width * 8 / 40}px;`
+      })
+    }
   },
 
   methods: {
@@ -86,10 +99,11 @@ export default {
 @import '../styles/mixins.less';
 
 .bus {
-  .ratio(40; 8);
+  .ratio(40; 8; true);
   background-color: white;
+  // float: left;
   position: relative;
-  box-shadow: @dark-grey 25px 25px 1px 8px;
+  box-shadow: @eerie-blue 25px 25px 1px 8px;
   border-radius: .basis(2)[];
 }
 
@@ -99,6 +113,8 @@ export default {
   left: 0;
   bottom: 0;
   right: 0;
+  width: 100%;
+  height: 100%;
   display: grid;
   grid-template: auto / [window] 3fr [bedside] 6fr [bath-bed] 8fr [bulkhead] 12fr [counter-end] 16fr [windshield];
   grid-template-areas: "books bed bath kitchen living";

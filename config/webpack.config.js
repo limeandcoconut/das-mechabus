@@ -215,8 +215,8 @@ if (isProd) {
     }),
   )
 } else {
-  config.devtool = 'cheap-module-eval-source-map'
-  // config.devtool = 'source-map'
+  // config.devtool = 'cheap-module-eval-source-map'
+  config.devtool = 'source-map'
   // config.devtool = 'cheap-eval-source-map'
   // config.devtool = 'eval'
 

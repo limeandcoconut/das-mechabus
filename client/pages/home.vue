@@ -72,7 +72,7 @@ export default {
 @import '../styles/mixins.less';
 
 .layout {
-  background-color: white;
+  background-color: @deep-space-sparkle;
   display: grid;
   grid-template:  auto  / repeat(12, 1fr);
   grid-template-areas: "header header header header header header header header header header header header";
@@ -86,14 +86,22 @@ export default {
   .oxanium(500);
 
   .header {
-    background-color: @old-blue;
+    background-color: @yankees-blue;
+    grid-area: header;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    padding: .basis(3)[];
+    padding: .basis(3)[] calc(100% / 12);
     margin-bottom: .basis(2)[];
     justify-self: stretch;
-    grid-area: header;
+    color: @eggshell;
+
+    .refresh {
+      background-color: transparent;
+      padding: .basis(1)[];
+      border: 1px solid @eggshell;
+      color: @eggshell;
+    }
   }
 
   .bus {

@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import {mapState, mapActions} from 'vuex'
+import { mapState, mapActions } from 'vuex'
 export default {
   name: 'errorBox',
   computed: {
@@ -25,6 +25,15 @@ export default {
 <style lang="less">
 @import '../styles/mixins.less';
 
+@keyframes slide-in {
+  0% {
+    transform: translate3D(calc(100% + .basis(2)[]), 0 ,0)
+  }
+  100% {
+    transform: translate3D(0, 0, 0)
+  }
+}
+
 .error-box {
   text-align: center;
   position: fixed;
@@ -33,12 +42,15 @@ export default {
   width: .basis(30)[];
   height: auto;
   padding-top: 1em;
-  background-color: white;
-  box-shadow: @old-blue 25px 25px 1px 8px;
+  background-color: @deep-space-sparkle;
+  border: 2px solid @eggshell;
   z-index: 200;
   overflow: hidden;
   line-height: 1.2;
   font-weight: 500;
+  color: @eggshell;
+  transform: translate3D(0, 0, 0);
+  animation: slide-in .3s ease-in-out both;
 }
 
 .error-title {
@@ -54,12 +66,13 @@ export default {
 
 .dismiss-button {
   display: block;
-  background-color: @old-blue;
-  color: white;
+  background-color: @deep-space-sparkle;
   width: 100%;
   padding: 1em 0;
   margin: 0;
+  border-top: 2px solid @eggshell;
   font-weight: inherit;
+  color: @eggshell;
   cursor: pointer;
 }
 </style>
