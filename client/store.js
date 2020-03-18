@@ -1,9 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import {
-  apiHost,
-  wsProtocol,
-  wsPort,
+  wsEndpoint,
   controllers as configControllers,
 } from '../config/config'
 import { sleep } from './utils'
@@ -73,10 +71,11 @@ const store = {
 
     manageSocket: async ({ state: { socket }, dispatch, commit }, retryAttepts = 5) => {
       if (socket.readyState === WebSocket.OPEN) {
-        return
+        return true
       }
       if (socket.readyState === WebSocket.CLOSED || socket.readyState === WebSocket.CLOSING) {
         commit('showError', 'Connection closed. Retrying...')
+        // TODO: Hide/manage error
         await dispatch('initialize')
         return
       }
@@ -123,7 +122,7 @@ const store = {
 
     initialize: async ({ state, commit }) => {
       console.log('init')
-      const socket = new WebSocket(`${wsProtocol}${apiHost}:${wsPort}`)
+      const socket = new WebSocket(`${wsEndpoint}`)
 
       const nameToIdMap = {}
       const idToNameMap = {}

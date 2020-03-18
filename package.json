@@ -8,6 +8,8 @@
     "dev:prod-api": "USE_PROD_API=true NODE_ENV=development node server/serve.js",
     "pack:prod": "NODE_ENV=production webpack --config config/webpack.config.js --progress --hide-modules",
     "serve:prod": "NODE_ENV=production node server/serve.js",
+    "cp:hap": "sudo cp ./haproxy.cfg /etc/haproxy/haproxy.cfg",
+    "scp:build": "scp scp -r ./dist/ brain:das-mechabus/",
     "clean": "rm dist/*"
   },
   "keywords": [],
