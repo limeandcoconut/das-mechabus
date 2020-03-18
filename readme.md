@@ -8,16 +8,18 @@ Run `npm run dev` to start webpacking and serving to `localhost:3005`
  - `pack:prod` - Runs webpack in production mode
  - `serve:prod` - Starts the server in production mode (Don't forget to pack first)
  - `clean` - deletes files in the dist directory
+ - TODO:
 
 ## HTTPS/HTTP2
 The application serves up only http and expects you to use a reverse proxy for TLS.  
 For local testing of Http2 there is an included docker compose file and and HAProxy config.  
 For deployment, using HAProxy via the included config is also reccomended.  
 
-## Things to edit for your own project
-- [ ] Customize `config/config.js`  
-- [ ] Add icons  
-- [ ] Author, colors, twitter names in `config/meta.config.js`
+## Deploying
+TODO:
+- [ ] cert
+- [ ] HAProxy 
+- [ ] node v11.9.0
 
 ## Notes
 ### rel="canonical"

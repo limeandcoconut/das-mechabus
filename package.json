@@ -9,7 +9,9 @@
     "pack:prod": "NODE_ENV=production webpack --config config/webpack.config.js --progress --hide-modules",
     "serve:prod": "NODE_ENV=production node server/serve.js",
     "cp:hap": "sudo cp ./haproxy.cfg /etc/haproxy/haproxy.cfg",
+    "restart:hap": "haproxy -c -f /etc/haproxy/haproxy.cfg && echo 'config is valid, reloading...' && sudo service haproxy start -sf",
     "scp:build": "scp scp -r ./dist/ brain:das-mechabus/",
+    "deploy": "npm run scp:build && ssh brain npm run cp:hap",
     "clean": "rm dist/*"
   },
   "keywords": [],
