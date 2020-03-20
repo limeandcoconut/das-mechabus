@@ -1,14 +1,14 @@
 <template>
   <div
-  class="room"
-  :class="{
-    lit: state,
-    locked,
-    'animate-out': animateOut,
-    'animate-in': animateIn,
-  }"
-  @click="handleClick"
-  @mouseleave="locked = false"/>
+    class="room"
+    :class="{
+      lit: state,
+      locked,
+      'animate-out': animateOut,
+      'animate-in': animateIn,
+    }"
+    @click="handleClick"
+    @mouseleave="locked = false"/>
 </template>
 
 <script>
@@ -73,10 +73,12 @@ export default {
 .room {
   position: relative;
   background-color: @taupe-grey;
-  border-left: 4px solid @hot-shade;
-  border-top: 4px solid @eerie-black;
-  border-bottom: 4px solid @eerie-black;
-  overflow: hidden;
+  border-top: 4px solid @hot-shade;
+  // border-left: 4px solid @eerie-black;
+  // border-right: 4px solid @eerie-black;
+  // overflow: hidden;
+  // transform: translate3d(0, 0, 0);
+  // perspective: 0;
 
   &:before {
     content: ' ';
@@ -86,6 +88,7 @@ export default {
     left: 0;
     bottom: 0;
     right: 0;
+    padding: 1px;
     background-color: @baby-powder;
     opacity: 0;
     transition: opacity .2s ease-in;
@@ -103,6 +106,7 @@ export default {
     left: 0;
     bottom: 0;
     right: 0;
+    padding: 1px;
     border: 1vh solid @light;
     // background-color: @ash-grey;
     opacity: 0;
@@ -164,15 +168,16 @@ export default {
   }
 
   &:first-of-type {
-    border-left: 4px solid @eerie-black;
-    border-top-left-radius: .basis(2)[];
-    border-bottom-left-radius: .basis(2)[];
+    // border-top: 4px solid @eerie-black;
+    border-top: none;
+    // border-top-left-radius: .basis(2)[];
+    // border-top-right-radius: .basis(2)[];
   }
 
   &:last-of-type {
-    border-right: 4px solid @eerie-black;
-    border-top-right-radius: .basis(2)[];
-    border-bottom-right-radius: .basis(2)[];
+    // border-bottom: 4px solid @eerie-black;
+    // border-bottom-left-radius: .basis(2)[];
+    // border-bottom-right-radius: .basis(2)[];
   }
 }
 

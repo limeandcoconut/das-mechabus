@@ -6,24 +6,22 @@
     class="bus"
     ref="bus"
     :style="ratioStyles">
-    <div class="container">
-      <Room
-        :state="0"
-        class="books"/>
-      <Room
-        :state="0"
-        class="bed"/>
-      <Room
-        :state="0"
-        class="bath"/>
-      <Room
-        class="kitchen"
-        :state="roomState('kitchen')"
-        @click.native="() => toggleController('kitchen')"/>
-      <Room
-        :state="0"
-        class="living"/>
-    </div>
+    <Room
+      :state="0"
+      class="books"/>
+    <Room
+      :state="0"
+      class="bed"/>
+    <Room
+      :state="0"
+      class="bath"/>
+    <Room
+      class="kitchen"
+      :state="roomState('kitchen')"
+      @click.native="() => toggleController('kitchen')"/>
+    <Room
+      :state="0"
+      class="living"/>
   </div>
 </template>
 
@@ -104,51 +102,59 @@ export default {
 @import '../styles/mixins.less';
 
 .bus {
-  .ratio(40; 8; true);
+  // .ratio(40; 8; true);
+  display: flex;
+  flex-direction: column;
+
+  height: 85vh;
+  width: calc(85vh * 8 / 40);
+
   background-color: white;
   // float: left;
   position: relative;
   box-shadow: @eerie-blue 25px 25px 1px 8px;
   border-radius: .basis(2)[];
+  border: 4px solid @eerie-black;
+  overflow: hidden;
 }
 
-.container {
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  grid-template: auto / [window] 3fr [bedside] 6fr [bath-bed] 8fr [bulkhead] 12fr [counter-end] 16fr [windshield];
-  grid-template-areas: "books bed bath kitchen living";
-}
+// .container {
+//   position: absolute;
+//   top: 0;
+//   left: 0;
+//   bottom: 0;
+//   right: 0;
+//   width: 100%;
+//   height: 100%;
+//   // display: grid;
+//   // grid-template: auto / [window] 3fr [bedside] 6fr [bath-bed] 8fr [bulkhead] 12fr [counter-end] 16fr [windshield];
+//   // grid-template-areas: "books bed bath kitchen living";
+// }
 
 .books {
-  grid-area: books;
+  // grid-area: books;
+  height: 6%;
 }
 
 .bed {
-  grid-area: bed;
+  // grid-area: bed;
+  height: 12%;
 }
 
 .bath {
-  grid-area: bath;
+  height: 20%;
+  // grid-area: bath;
 }
 
 .kitchen {
-  grid-area: kitchen;
+  height: 28%;
+  // grid-area: kitchen;
 }
 
 .living {
-  grid-area: living;
-}
-
-.test {
-  width: 100px;
-  height: 100px;
-  border: 1px solid #000;
+  flex-grow: 1;
+  // align-self: stretch;
+  // grid-area: living;
 }
 
 </style>

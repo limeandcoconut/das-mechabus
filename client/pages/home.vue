@@ -15,7 +15,9 @@
         logout
       </button>
     </div>
-    <Bus class="bus"/>
+    <div class="bus-container">
+      <Bus class="bus"/>
+    </div>
   </div>
 </template>
 
@@ -73,19 +75,26 @@ export default {
   background-color: @deep-space-sparkle;
   display: grid;
   grid-template:  auto  / repeat(12, 1fr);
-  grid-template-areas: "header header header header header header header header header header header header";
+  grid-template-areas: "main   main   main   main   main   main   main   main   main   bus    bus    bus";
   grid-column-gap: .basis(2)[];
-  grid-row-gap: .basis(1)[];
+  grid-row-gap: .basis(2)[];
   align-items: start;
-  align-content: start;
+  align-content: stretch;
   height: 100vh;
-  perspective: 60em;
+  padding: .basis(2)[];
+  padding-top: .basis(8)[];
   font-size: .fz(venti)[];
   .oxanium(500);
 
   .header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: .basis(6)[];
     background-color: @yankees-blue;
-    grid-area: header;
+    // grid-area: header;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -93,6 +102,7 @@ export default {
     margin-bottom: .basis(2)[];
     justify-self: stretch;
     color: @eggshell;
+    z-index: 1000;
 
     .header-button {
       background-color: transparent;
@@ -102,9 +112,15 @@ export default {
     }
   }
 
-  .bus {
-    grid-column: 2 / span 10;
-    grid-row: 3 / span 1;
+  .bus-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    // grid-column: 2 / span 10;
+    // grid-row: 3 / span 1;
+    background-color: @yankees-blue;
+    align-self: stretch;
+    grid-area: bus;
   }
 
   .above(md; {
