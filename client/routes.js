@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import { decodeJWT } from './utils'
 Vue.use(Router)
 
 import defaultLayout from './layouts/default.vue'
@@ -43,15 +44,16 @@ export default () => {
   const router = new Router(options)
   router.beforeEach(async (to, from, next) => {
     const jwt = localStorage.getItem('jwt')
+    const jwtValid = jwt && decodeJWT(jwt).exp > Date.now()
     if (to.matched.some(({ meta: { requiresAuth } }) => requiresAuth)) {
-      if (!jwt) {
+      if (!jwtValid) {
         next({
           path: '/login',
         })
         return
       }
     }
-    if (jwt && to.matched.some(({ path }) => path === '/login')) {
+    if (jwtValid && to.matched.some(({ path }) => path === '/login')) {
       next({
         path: '/',
       })

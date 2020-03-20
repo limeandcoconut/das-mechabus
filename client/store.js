@@ -4,7 +4,7 @@ import {
   wsEndpoint,
   controllers as configControllers,
 } from '../config/config'
-import { sleep } from './utils'
+import { sleep, decodeJWT } from './utils'
 
 Vue.use(Vuex)
 
@@ -182,7 +182,7 @@ const store = {
     },
 
     scheduleRefresh({ dispatch }, jwt) {
-      const { exp } = JSON.parse(Buffer.from(jwt.split('.')[1], 'base64').toString('utf-8'))
+      const { exp } = decodeJWT(jwt)
       // Refresh the token 2 minutes before it expires
       setTimeout(() => {
         dispatch('send', {
