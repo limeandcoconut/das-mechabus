@@ -206,7 +206,7 @@ if (isProd) {
       policy: [
         {
           userAgent: '*',
-          allow: '/',
+          disallow: '/',
         },
       ],
       sitemap: path.join(productionHost, 'sitemap.xml'),

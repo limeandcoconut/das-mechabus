@@ -3,10 +3,16 @@
     <div class="header">
       Das Mechabus
       <button
-        class="refresh"
+        class="refresh header-button"
         type="button"
         @click="refreshControllers">
         refresh
+      </button>
+      <button
+        class="logout header-button"
+        type="button"
+        @click="logout">
+        logout
       </button>
     </div>
     <Bus class="bus"/>
@@ -15,20 +21,12 @@
 
 <script>
 import {
-  title,
-  author,
-  description,
   host,
-  color,
   og,
   twitter,
-  ms,
-  manifest,
-  favicons,
-
 } from '../../config/meta.config'
 import Bus from '../components/bus.vue'
-import { isProd } from '../utils'
+import { extendMeta } from '../utils'
 import { mapActions } from 'vuex'
 
 export default {
@@ -38,46 +36,33 @@ export default {
     Bus,
   },
 
-  metaInfo: () => {
-    const meta = {
-      title,
-      meta: [
-        { name: 'description', content: description },
-        { name: 'author', content: author },
-        { property: 'og:title', content: title },
-        { property: 'og:description', content: description },
-        { property: 'og:image', content: og.image.src },
-        { property: 'og:image:width', content: og.image.width },
-        { property: 'og:image:height', content: og.image.height },
-        { property: 'og:type', content: og.type },
-        { property: 'og:url', content: host },
-        { property: 'twitter:image', content: twitter.image.src },
-        { property: 'twitter:image:alt', content: twitter.image.alt },
-        { property: 'twitter:card', content: twitter.card },
-        { name: 'twitter:creator', content: twitter.creator },
-        { name: 'theme-color', content: color },
-        { name: 'msapplication-TileImage', content: favicons.ms },
-        { name: 'msapplication-TileColor', content: ms.color },
-      ],
-      link: [
-        { rel: 'canonical', href: 'https://jacobsmith.tech' },
-        { rel: 'shortcut icon', href: favicons.default },
-        { rel: 'icon', href: favicons.x32, sizes: '32x32', type: 'image/png' },
-        { rel: 'icon', href: favicons.x16, sizes: '16x16', type: 'image/png' },
-        { rel: 'apple-touch-icon', href: favicons.apple, sizes: '180x180' },
-        { rel: 'mask-icon', href: favicons.safariMask, color: color },
-        { rel: 'icon', href: favicons.ms },
-      // noindex, nofollow can go here too
-      ],
-    }
-    if (isProd()) {
-      meta.link.push({ rel: 'manifest', href: manifest })
-    }
-    return meta
-  },
+  metaInfo: () => extendMeta({
+    meta: [
+      { property: 'og:image', content: og.image.src },
+      { property: 'og:image:width', content: og.image.width },
+      { property: 'og:image:height', content: og.image.height },
+      { property: 'og:type', content: og.type },
+      { property: 'og:url', content: host },
+      { property: 'twitter:image', content: twitter.image.src },
+      { property: 'twitter:image:alt', content: twitter.image.alt },
+      { property: 'twitter:card', content: twitter.card },
+      { name: 'twitter:creator', content: twitter.creator },
+    ],
+    link: [
+      { rel: 'canonical', href: 'https://jacobsmith.tech' },
+    ],
+  }),
 
   methods: {
-    ...mapActions(['refreshControllers']),
+    logout() {
+      this.deauthorize()
+      this.$router.push({ name: 'login' })
+    },
+
+    ...mapActions([
+      'refreshControllers',
+      'deauthorize',
+    ]),
   },
 }
 </script>
@@ -109,7 +94,7 @@ export default {
     justify-self: stretch;
     color: @eggshell;
 
-    .refresh {
+    .header-button {
       background-color: transparent;
       padding: .basis(1)[];
       border: 1px solid @eggshell;

@@ -1,28 +1,28 @@
 <template>
   <Loading
-  v-if="!loaded"
+    v-if="!loaded"
   />
   <div v-else
-  class="bus"
-  ref="bus"
-  :style="ratioStyles">
+    class="bus"
+    ref="bus"
+    :style="ratioStyles">
     <div class="container">
       <Room
-      :state="0"
-      class="books"/>
+        :state="0"
+        class="books"/>
       <Room
-      :state="0"
-      class="bed"/>
+        :state="0"
+        class="bed"/>
       <Room
-      :state="0"
-      class="bath"/>
+        :state="0"
+        class="bath"/>
       <Room
-      class="kitchen"
-      :state="roomState('kitchen')"
-      @click.native="() => toggleController('kitchen')"/>
+        class="kitchen"
+        :state="roomState('kitchen')"
+        @click.native="() => toggleController('kitchen')"/>
       <Room
-      :state="0"
-      class="living"/>
+        :state="0"
+        class="living"/>
     </div>
   </div>
 </template>
@@ -58,7 +58,12 @@ export default {
   },
 
   async mounted() {
-    await this.initPromise
+    try {
+      await this.refreshControllers(true)
+    } catch (error) {
+      this.showError(error)
+      return
+    }
 
     console.log('loaded')
     this.loaded = true
@@ -89,6 +94,7 @@ export default {
     ...mapActions([
       'showError',
       'tellController',
+      'refreshControllers',
     ]),
   },
 }

@@ -10,10 +10,16 @@ Vue.use(Vuex)
 
 const store = {
   state: {
+    initPromise: null,
+    authPromise: null,
+    authResolve: null,
+    authReject: null,
+    refreshPromise: null,
+    refreshResolve: null,
+    refreshReject: null,
     showErrorMessage: false,
     errorMessage: '',
     controllers: {},
-    initPromise: null,
     nameToIdMap: {},
     socket: null,
   },
@@ -24,6 +30,12 @@ const store = {
         throw new Error('Initialization Promise not set.')
       }
       return state.initPromise
+    },
+    authPromise: (state) => {
+      if (!state.authPromise) {
+        throw new Error('Authorization Promise not set.')
+      }
+      return state.authPromise
     },
   },
 
@@ -40,6 +52,46 @@ const store = {
     hideError(state) {
       state.showErrorMessage = false
       state.errorMessage = ''
+    },
+
+    resolveAuth(state) {
+      if (typeof state.authResolve !== 'function') {
+        // eslint-disable-next-line unicorn/prefer-type-error
+        throw new Error('Not awaiting authentication.')
+      }
+      state.authResolve()
+      state.authResolve = null
+      state.authReject = null
+    },
+
+    rejectAuth(state) {
+      if (typeof state.authReject !== 'function') {
+        // eslint-disable-next-line unicorn/prefer-type-error
+        throw new Error('Not awaiting authentication.')
+      }
+      state.authReject()
+      state.authResolve = null
+      state.authReject = null
+    },
+
+    resolveRefresh(state) {
+      if (typeof state.refreshResolve !== 'function') {
+        // eslint-disable-next-line unicorn/prefer-type-error
+        throw new Error('Not awaiting update.')
+      }
+      state.refreshResolve()
+      state.refreshResolve = null
+      state.refreshReject = null
+    },
+
+    rejectRefresh(state) {
+      if (typeof state.refreshReject !== 'function') {
+        // eslint-disable-next-line unicorn/prefer-type-error
+        throw new Error('Not awaiting update.')
+      }
+      state.refreshReject()
+      state.refreshResolve = null
+      state.refreshReject = null
     },
 
     setControllers(state, controllers) {
@@ -69,14 +121,29 @@ const store = {
       commit('hideError')
     },
 
-    manageSocket: async ({ state: { socket }, dispatch, commit }, retryAttepts = 5) => {
+    send: async ({ state: { socket }, dispatch }, payload) => {
+      if (!await dispatch('manageSocket')) {
+        return false
+      }
+      if (!payload.jwt) {
+        payload.jwt = localStorage.getItem('jwt')
+      }
+      socket.send(JSON.stringify(payload))
+    },
+
+    manageSocket: async ({ state: { socket }, state, dispatch, commit }, retryAttepts = 5) => {
       if (socket.readyState === WebSocket.OPEN) {
         return true
       }
       if (socket.readyState === WebSocket.CLOSED || socket.readyState === WebSocket.CLOSING) {
         commit('showError', 'Connection closed. Retrying...')
-        // TODO: Hide/manage error
-        await dispatch('initialize')
+        dispatch('initialize')
+        try {
+          await state.authPromise
+          commit('hideError')
+        } catch (error) {
+          commit('showError', error)
+        }
         return
       }
       if (socket.readyState === WebSocket.CONNECTING) {
@@ -91,36 +158,66 @@ const store = {
       }
     },
 
-    refreshControllers: async ({ state: { socket }, dispatch }) => {
-      if (!await dispatch('manageSocket')) {
-        return false
+    authorize: ({ state, dispatch }, password) => {
+      // There's no need for getters and mutations since these are only used internally
+      state.authPromise = new Promise((resolve, reject) => {
+        state.authResolve = resolve
+        state.authReject = reject
+      })
+
+      dispatch('send', {
+        type: 'auth',
+        data: { password },
+      })
+
+      return state.authPromise
+    },
+
+    deauthorize: ({ state }) => {
+      state.authPromise = null
+      state.authResolve = null
+      state.authReject = null
+
+      localStorage.removeItem('jwt')
+    },
+
+    scheduleRefresh({ dispatch }, jwt) {
+      const { exp } = JSON.parse(Buffer.from(jwt.split('.')[1], 'base64').toString('utf-8'))
+      // Refresh the token 2 minutes before it expires
+      setTimeout(() => {
+        dispatch('send', {
+          type: 'reauth',
+          data: { jwt },
+        })
+      }, exp - Date.now() - (2 * 60 * 1000))
+    },
+
+    refreshControllers: ({ state, dispatch }, requestPromise = false) => {
+      if (requestPromise) {
+        state.refreshPromise = new Promise((resolve, reject) => {
+          state.refreshResolve = resolve
+          state.refreshReject = reject
+        })
       }
-      socket.send(JSON.stringify({
+
+      dispatch('send', {
         type: 'refresh',
-      }))
+      })
+
+      return state.refreshPromise
     },
 
-    askController: async ({ state: { socket }, dispatch }, payload) => {
-      if (!await dispatch('manageSocket')) {
-        return false
-      }
-      socket.send(JSON.stringify({
-        type: 'get',
-        data: payload,
-      }))
-    },
+    askController: async ({ dispatch }, payload) => dispatch('send', {
+      type: 'get',
+      data: payload,
+    }),
 
-    tellController: async ({ state: { socket }, dispatch }, payload) => {
-      if (!await dispatch('manageSocket')) {
-        return false
-      }
-      socket.send(JSON.stringify({
-        type: 'set',
-        data: payload,
-      }))
-    },
+    tellController: async ({ dispatch }, payload) => dispatch('send', {
+      type: 'set',
+      data: payload,
+    }),
 
-    initialize: async ({ state, commit }) => {
+    initialize: ({ state, commit, dispatch }) => {
       console.log('init')
       const socket = new WebSocket(`${wsEndpoint}`)
 
@@ -144,10 +241,20 @@ const store = {
       }))
 
       socket.addEventListener('message', ({ data: message }) => {
-        const { type, data } = JSON.parse(message)
+        let { type, data } = JSON.parse(message)
         console.log(type, data)
+
+        if (type === 'auth') {
+          localStorage.setItem('jwt', data.jwt)
+          dispatch('scheduleRefresh', data.jwt)
+          commit('resolveAuth')
+          return
+        }
         if (type === 'update') {
           for (const { id, state: lightState, milliseconds, button } of data) {
+            if (state.refreshResolve) {
+              commit('resolveRefresh')
+            }
             let controller = state.controllers[id]
             if (!controller) {
               controller = {
@@ -167,7 +274,16 @@ const store = {
             console.log('resolved')
             resolveInitPromse = null
           }
+          return
         }
+        if (type === 'error') {
+          if (state.authResolve && !localStorage.getItem('jwt')) {
+            commit('rejectAuth')
+          }
+          commit('showError', data.error)
+          return
+        }
+
       })
 
     },
