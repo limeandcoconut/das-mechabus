@@ -20,7 +20,7 @@ export default {
 .layout {
   background-color: @deep-space-sparkle;
 
-  .oxanium();
+  .rubik();
   font-size: .basis(10)[];
   width: 100vw;
   height: 100vh;

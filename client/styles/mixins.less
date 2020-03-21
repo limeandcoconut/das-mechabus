@@ -21,15 +21,48 @@
 @hot-shade: #3e3c3c;
 @eerie-black: #211F1D;
 
-@light: #fbe57a;
+@light: #fff4b7;
 
-// oxanium
+@green: #a5e12e;
+@yellow: #e6db74;
+@white: #f8f8f2;
+@grey: #88846f;
+@mid-grey: #474747;
+@dark: #272822;
+@very-dark: #1e1f1c;
+@blue: #66d9ef;
+@lavender: #ae81ff;
+@magenta: #f92672;
+@taupe: #d1a075;
+@orange: #fd971f;
+
+@dark-navy: #222432;
+@black: #111111;
+// @light: #fbe57a;
+
+// // oxanium
+// // Standard usage:
+// // .oxanium(500)[];
+// // Gives an element the font face oxanium.
+// .oxanium(@weight: 400) {
+//   // font-family: 'Courier New', sans-serif;
+//   font-family: 'Oxanium', 'Courier New', sans-serif;
+//   font-weight: @weight;
+// }
+
+// rubik
 // Standard usage:
-// .oxanium(500)[];
-// Gives an element the font face oxanium.
-.oxanium(@weight: 400) {
+// .rubik(500)[];
+// Gives an element the font face rubik.
+.rubik(@weight: 400) {
   // font-family: 'Courier New', sans-serif;
-  font-family: 'Oxanium', 'Courier New', sans-serif;
+  font-family: 'Rubik', 'Courier New', sans-serif;
+  font-weight: @weight;
+}
+
+.rmn(@weight: 400) {
+  // font-family: 'Courier New', sans-serif;
+  font-family: 'Rubik Mono One', 'Courier New', sans-serif;
   font-weight: @weight;
 }
 
@@ -77,6 +110,7 @@
   @xs:        10;
   @sm:        12.5;
   @md:        15;
+  @lg:       16;
   @venti:       22.5;
   @tetra:       36;
   // @giga:      52.5;
@@ -90,6 +124,7 @@
   @xs:        20;
   @sm:        25;
   @md:        30;
+  @lg:        32;
   @venti:       45;
   @tetra:       72;
   @giga:       108;

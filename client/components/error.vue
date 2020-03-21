@@ -56,7 +56,7 @@ export default {
 .error-title {
   font-size: .basis(2)[];
   padding-bottom: 0.5em;
-  .oxanium();
+  .rubik();
 }
 
 .error-message {

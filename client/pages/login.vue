@@ -63,7 +63,7 @@ export default {
   justify-content: center;
   height: 100vh;
   font-size: .fz(venti)[];
-  .oxanium(500);
+  .rubik(500);
 }
 
 </style>

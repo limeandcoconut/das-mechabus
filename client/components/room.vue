@@ -72,8 +72,8 @@ export default {
 
 .room {
   position: relative;
-  background-color: @taupe-grey;
-  border-top: 4px solid @hot-shade;
+  background-color: @mid-grey;
+  border-top: 4px solid @very-dark;
   // border-left: 4px solid @eerie-black;
   // border-right: 4px solid @eerie-black;
   // overflow: hidden;
@@ -89,7 +89,7 @@ export default {
     bottom: 0;
     right: 0;
     padding: 1px;
-    background-color: @baby-powder;
+    background-color: @yellow;
     opacity: 0;
     transition: opacity .2s ease-in;
   }

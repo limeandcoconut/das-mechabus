@@ -106,15 +106,15 @@ export default {
   display: flex;
   flex-direction: column;
 
-  height: 85vh;
-  width: calc(85vh * 8 / 40);
+  height: 80vh;
+  width: calc(80vh * 8 / 40);
 
-  background-color: white;
+  background-color: @white;
   // float: left;
   position: relative;
-  box-shadow: @eerie-blue 25px 25px 1px 8px;
+  // box-shadow: @orange 0 0 0 4px;
   border-radius: .basis(2)[];
-  border: 4px solid @eerie-black;
+  border: 4px solid @blue;
   overflow: hidden;
 }
 
