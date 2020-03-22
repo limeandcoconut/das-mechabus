@@ -20,12 +20,12 @@
         </LaserButton>
       </div>
     </div>
-    <div class="status"></div>
-    <div class="power"></div>
-    <div class="bus-container">
+    <div class="status card"></div>
+    <div class="power card"></div>
+    <div class="bus-container card">
       <Bus class="bus"/>
     </div>
-    <div class="big"></div>
+    <div class="big card"></div>
   </div>
 </template>
 
@@ -92,54 +92,29 @@ export default {
   "big    big    big    big    big    big    big    big    big    bus   bus   bus";
   grid-column-gap: .basis(3)[];
   grid-row-gap: .basis(3)[];
-  // align-items: start;
-  // align-content: stretch;
   height: 100vh;
   padding: .basis(3)[];
   padding-top: .basis(12)[];
   font-size: .fz(venti)[];
   .rubik(500);
 
-  // .header-background {
-  //   content: ' ';
-  //   background-color: @white;
-  //   position: fixed;
-  //   top: 0;
-  //   left: 0;
-  //   right: 0;
-  //   height: .basis(8)[];
-  //   z-index: 100;
-  // }
-
   .header {
-    // background-color: @very-dark;
     background-color: inherit;
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
-    width: 100%;
-    height: .basis(8)[];
-    // background-color: @yankees-blue;
-    // grid-area: header;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    width: 100%;
+    height: .basis(8)[];
     padding: 0 .basis(3)[];
-    // padding-top: .basis(6)[] ;
-    // margin-bottom: .basis(2)[];
     justify-self: stretch;
-    // color: @eggshell;
     color: @white;
     z-index: 1000;
-    // background: @black;
-    // background: linear-gradient(white 0%, white 48%, @eerie-black 48%,  @eerie-black 100%);
-    // // background: linear-gradient(@black 0%, @black 80%, transparent 80%,  transparent 100%);
-    // -webkit-background-clip: text;
-    // -webkit-text-fill-color: transparent;
     font-size: .fz(giga)[];
- .rmn();
-  // border: 1px soild red;
+    .rmn();
 
     .title {
       position: relative;
@@ -153,13 +128,13 @@ export default {
         height: .3rem;
         width: 100%;
         background-color: inherit;
-        // transform: rotate(-4deg) translateY(0.05rem);
         transform: translateY(-1.95rem);
 
         &:nth-child(2) {
           height: 0.4rem;
           transform: translateY(-1.35rem);
         }
+
         &:last-of-type {
           height: 0.5rem;
           transform: translateY(-0.73rem);
@@ -170,7 +145,6 @@ export default {
     .right-content {
       display: flex;
       align-items: flex-end;
-      // background-color: @dark-navy;
 
       .header-button {
         margin-left: .basis(2)[];
@@ -178,47 +152,29 @@ export default {
     }
   }
 
+  .card {
+    background-color: @very-dark;
+    justify-self: stretch;
+  }
+
   .bus-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    // grid-column: 2 / span 10;
-    // grid-row: 3 / span 1;
-    background-color: @very-dark;
-    align-self: stretch;
-    justify-self: stretch;
     grid-area: bus;
   }
 
   .status {
-    background-color: @very-dark;
-    // align-self: stretch;
-    justify-self: stretch;
     grid-area: status;
   }
 
   .power {
-    // background-color: @taupe;
-    background-color: @very-dark;
-    // align-self: stretch;
-    justify-self: stretch;
     grid-area: power;
   }
 
   .big {
-    background-color: @very-dark;
-    // align-self: stretch;
-    justify-self: stretch;
     grid-area: big;
   }
-
-  .above(md; {
-    // grid-template: auto / 1fr .basis(80)[] 1fr;
-  });
-
-  .above(lg; {
-    // grid-template: auto / 1fr .basis(70)[] 1fr;
-  });
 }
 
 </style>

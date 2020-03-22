@@ -1,18 +1,20 @@
 <template>
   <div class="layout">
-    <label>
-      Login
-      <input
-        name="password"
-        type="password"
-        v-model="password"
-        required />
-    </label>
-    <button
-      type="submit"
-      @click.prevent="login">
-      Login
-    </button>
+    <div class="container">
+      <LaserContainer>
+        <input
+          v-model="password"
+          class="password"
+          type="password"
+          name="password" />
+      </LaserContainer>
+
+      <LaserButton
+        class="submit"
+        @click.prevent="login">
+        login
+      </LaserButton>
+    </div>
 
   </div>
 </template>
@@ -20,9 +22,16 @@
 <script>
 import { mapActions } from 'vuex'
 import { defaultMeta } from '../utils'
+import LaserContainer from '../components/laser-container.vue'
+import LaserButton from '../components/laser-button.vue'
 
 export default {
   name: 'login',
+
+  components: {
+    LaserContainer,
+    LaserButton,
+  },
 
   metaInfo: defaultMeta,
 
@@ -57,13 +66,27 @@ export default {
 @import '../styles/mixins.less';
 
 .layout {
-  background-color: @deep-space-sparkle;
+  background-color: @dark-navy;
   display: flex;
   align-items: center;
   justify-content: center;
   height: 100vh;
   font-size: .fz(venti)[];
   .rubik(500);
+
+  .container {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+
+    .password {
+      background-color: transparent;
+      padding: .basis(1)[];
+      border: none;
+      height: 100%;
+      color: @magenta;
+    }
+  }
 }
 
 </style>

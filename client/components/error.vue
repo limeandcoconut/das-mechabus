@@ -1,21 +1,36 @@
 <template>
   <div v-if="showErrorMessage" class="error-box">
-    <div class="error-title">ERROR</div>
-    <div class="error-message">
-      {{ errorMessage }}
-    </div>
+    <LaserContainer>
+      <div class="error-title">ERROR</div>
+      <div class="error-message">
+        {{ errorMessage }}
+      </div>
 
-    <button class="dismiss-button" @click.prevent="dismissError" type="button">DISMISS</button>
+      <button
+        class="dismiss-button"
+        @click.prevent="dismissError"
+        type="button">
+        DISMISS
+      </button>
+    </LaserContainer>
   </div>
 </template>
 
 <script>
+import LaserContainer from './laser-container.vue'
 import { mapState, mapActions } from 'vuex'
+
 export default {
   name: 'errorBox',
+
+  components: {
+    LaserContainer,
+  },
+
   computed: {
     ...mapState(['showErrorMessage', 'errorMessage']),
   },
+
   methods: {
     ...mapActions(['dismissError']),
   },
@@ -37,42 +52,40 @@ export default {
 .error-box {
   text-align: center;
   position: fixed;
-  top: .basis(1)[];
+  top: .basis(2)[];
   right: .basis(2)[];
-  width: .basis(30)[];
+  width: .basis(20)[];
   height: auto;
-  padding-top: 1em;
-  background-color: @deep-space-sparkle;
-  border: 2px solid @eggshell;
-  z-index: 200;
-  overflow: hidden;
-  line-height: 1.2;
-  font-weight: 500;
-  color: @eggshell;
+  background-color: @dark-navy;
+  color: @magenta;
   transform: translate3D(0, 0, 0);
-  animation: slide-in .3s ease-in-out both;
+  animation: slide-in .1s ease-in-out both;
+  z-index: 200;
 }
 
 .error-title {
-  font-size: .basis(2)[];
-  padding-bottom: 0.5em;
+  background-color: @dark-navy;
   .rubik();
+  font-size: .basis(2)[];
+  padding-top: 0.5em;
+  padding-bottom: 0.25em;
 }
 
 .error-message {
+  background-color: @dark-navy;
+  padding-bottom: .5em;
   font-size: .basis(2)[];
-  padding-bottom: 1em;
 }
 
 .dismiss-button {
   display: block;
-  background-color: @deep-space-sparkle;
+  background-color: @dark-navy;
   width: 100%;
   padding: 1em 0;
   margin: 0;
-  border-top: 2px solid @eggshell;
+  border-top: 1px solid @magenta;
   font-weight: inherit;
-  color: @eggshell;
+  color: @magenta;
   cursor: pointer;
 }
 </style>

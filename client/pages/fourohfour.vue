@@ -18,7 +18,7 @@ export default {
 @import '../styles/mixins.less';
 
 .layout {
-  background-color: @deep-space-sparkle;
+  background-color: @dark-navy;
 
   .rubik();
   font-size: .basis(10)[];

@@ -74,11 +74,7 @@ export default {
   position: relative;
   background-color: @mid-grey;
   border-top: 4px solid @very-dark;
-  // border-left: 4px solid @eerie-black;
-  // border-right: 4px solid @eerie-black;
-  // overflow: hidden;
-  // transform: translate3d(0, 0, 0);
-  // perspective: 0;
+  cursor: pointer;
 
   &:before {
     content: ' ';
@@ -108,35 +104,27 @@ export default {
     right: 0;
     padding: 1px;
     border: 1vh solid @light;
-    // background-color: @ash-grey;
     opacity: 0;
     animation: none;
-    // transition: opacity .2s ease-in;
   }
 
   &.animate-in {
-    // border: 2px solid red;
     &:after {
-        animation: border 1s linear both;
-    //  border-color: @middle-blue;
-      }
+      animation: border 1s linear both;
+    }
   }
 
-   &.animate-out {
-     &:after {
-       animation: border 1s linear both;
-        border-color: @hot-shade;
-      }
+  &.animate-out {
+    &:after {
+      animation: border 1s linear both;
+      border-color: @hot-shade;
     }
+  }
 
   &:hover {
     &:before {
       opacity: 1;
     }
-
-    // &:after {
-    //   opacity: 1;
-    // }
   }
 
   &.lit {
@@ -144,40 +132,15 @@ export default {
       opacity: 1;
     }
 
-    // &:after {
-    //   opacity: 1;
-    // }
-
     &:hover {
       &:before {
         opacity: 0;
       }
-
-      // &:after {
-      //   opacity: 1;
-      // }
     }
-
-    // &.locked {
-    //   &:hover {
-    //     &:before {
-    //       opacity: 1;
-    //     }
-    //   }
-    // }
   }
 
   &:first-of-type {
-    // border-top: 4px solid @eerie-black;
     border-top: none;
-    // border-top-left-radius: .basis(2)[];
-    // border-top-right-radius: .basis(2)[];
-  }
-
-  &:last-of-type {
-    // border-bottom: 4px solid @eerie-black;
-    // border-bottom-left-radius: .basis(2)[];
-    // border-bottom-right-radius: .basis(2)[];
   }
 }
 

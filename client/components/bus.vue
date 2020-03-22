@@ -102,59 +102,35 @@ export default {
 @import '../styles/mixins.less';
 
 .bus {
-  // .ratio(40; 8; true);
+  position: relative;
   display: flex;
   flex-direction: column;
-
   height: 80vh;
   width: calc(80vh * 8 / 40);
-
   background-color: @white;
-  // float: left;
-  position: relative;
-  // box-shadow: @orange 0 0 0 4px;
   border-radius: .basis(2)[];
   border: 4px solid @blue;
   overflow: hidden;
 }
 
-// .container {
-//   position: absolute;
-//   top: 0;
-//   left: 0;
-//   bottom: 0;
-//   right: 0;
-//   width: 100%;
-//   height: 100%;
-//   // display: grid;
-//   // grid-template: auto / [window] 3fr [bedside] 6fr [bath-bed] 8fr [bulkhead] 12fr [counter-end] 16fr [windshield];
-//   // grid-template-areas: "books bed bath kitchen living";
-// }
-
 .books {
-  // grid-area: books;
   height: 6%;
 }
 
 .bed {
-  // grid-area: bed;
   height: 12%;
 }
 
 .bath {
   height: 20%;
-  // grid-area: bath;
 }
 
 .kitchen {
   height: 28%;
-  // grid-area: kitchen;
 }
 
 .living {
   flex-grow: 1;
-  // align-self: stretch;
-  // grid-area: living;
 }
 
 </style>
