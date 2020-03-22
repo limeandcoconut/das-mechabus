@@ -60,7 +60,7 @@ export default {
   color: @magenta;
   transform: translate3D(0, 0, 0);
   animation: slide-in .1s ease-in-out both;
-  z-index: 200;
+  z-index: 2000;
 }
 
 .error-title {

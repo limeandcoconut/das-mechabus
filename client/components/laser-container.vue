@@ -79,7 +79,7 @@ export default {
     width: 104%;
     border-bottom: 10px solid;
     border-color: @pink-sherbet;
-    transform: translate3d(0%, -100%, 0);
+    transform: translate3d(0%, calc(-100% - 4px), 0);
     transition:none;
     z-index: -1;
 
@@ -97,7 +97,7 @@ export default {
 
   &:hover {
     .line {
-      transform:translate3d(0, 40%, 0);
+      transform:translate3d(0, calc(100% + 4px), 0);
       transition: transform .33s ease-in-out;
 
       &:nth-child(2) {

@@ -105,12 +105,17 @@ export default {
   position: relative;
   display: flex;
   flex-direction: column;
-  height: 80vh;
-  width: calc(80vh * 8 / 40);
+  height: 110vh;
+  width: calc(110vh * 8 / 40);
   background-color: @white;
   border-radius: .basis(2)[];
   border: 4px solid @blue;
   overflow: hidden;
+
+  .above(480px; {
+    height: 80vh;
+    width: calc(80vh * 8 / 40);
+  });
 }
 
 .books {

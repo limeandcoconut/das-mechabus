@@ -84,19 +84,46 @@ export default {
 .layout {
   background-color: @dark-navy;
   display: grid;
-  grid-template-rows:  1fr 1fr ;
-  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows:  auto;
+  grid-template-columns: 1fr 1fr;
   grid-template-areas:
-  "status status status power  power  power  power  power  power  bus   bus   bus"
-  "big    big    big    big    big    big    big    big    big    bus   bus   bus"
-  "big    big    big    big    big    big    big    big    big    bus   bus   bus";
+  "bus bus"
+  "status status"
+  "power power"
+  "big big";
   grid-column-gap: .basis(3)[];
   grid-row-gap: .basis(3)[];
-  height: 100vh;
+  // height: 100vh;
   padding: .basis(3)[];
-  padding-top: .basis(12)[];
+  padding-top: .basis(14)[];
   font-size: .fz(venti)[];
   .rubik(500);
+
+  .above(sm; {
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-areas:
+    "status status status status status bus    bus    bus    bus    bus    bus    bus"
+    "big    big    big    big    big    bus    bus    bus    bus    bus    bus    bus"
+    "big    big    big    big    big    bus    bus    bus    bus    bus    bus    bus"
+    "power  power  power  power  power  power  power  power  power  power  power  power";
+    padding-top: .basis(18)[];
+  });
+
+  .above(md; {
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-areas:
+    "status status status power  power  power  power  power  bus    bus   bus   bus"
+    "big    big    big    big    big    big    big    big    bus    bus   bus   bus"
+    "big    big    big    big    big    big    big    big    bus    bus   bus   bus";
+  });
+
+  .above(lg; {
+    padding-top: .basis(12)[];
+    grid-template-areas:
+    "status status status power  power  power  power  power  power  bus   bus   bus"
+    "big    big    big    big    big    big    big    big    big    bus   bus   bus"
+    "big    big    big    big    big    big    big    big    big    bus   bus   bus";
+  });
 
   .header {
     background-color: inherit;
@@ -108,46 +135,107 @@ export default {
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    height: .basis(8)[];
+    height: auto;
     padding: 0 .basis(3)[];
     justify-self: stretch;
     color: @white;
     z-index: 1000;
-    font-size: .fz(giga)[];
+    font-size: .fz(tetra)[];
     .rmn();
+
+    .above(sm; {
+      font-size: .fz(giga)[];
+    });
+
+    .above(lg; {
+      height: .basis(8)[];
+    });
 
     .title {
       position: relative;
       background-color: inherit;
+      max-width: 300px;
       color: @magenta;
+
+      .above(sm; {
+        max-width: 600px;
+      });
+
+      .above(lg; {
+        max-width: none;
+      });
 
       .line {
         position: absolute;
         bottom: 0;
         left: 0;
-        height: .3rem;
         width: 100%;
+        height: 0.08em;
         background-color: inherit;
-        transform: translateY(-1.95rem);
+        transform: translateY(-.52em);
 
         &:nth-child(2) {
-          height: 0.4rem;
-          transform: translateY(-1.35rem);
+          height: 0.1em;
+          transform: translateY(-.36em);
         }
 
         &:last-of-type {
-          height: 0.5rem;
-          transform: translateY(-0.73rem);
+          height: 0.13em;
+          transform: translateY(-0.2em);
         }
+
+        .above(sm; {
+          height: .3rem;
+          transform: translateY(-1.95rem);
+
+          &:nth-child(2) {
+            height: 0.4rem;
+            transform: translateY(-1.35rem);
+          }
+
+          &:last-of-type {
+            height: 0.5rem;
+            transform: translateY(-0.73rem);
+          }
+        });
       }
     }
 
     .right-content {
       display: flex;
-      align-items: flex-end;
+      position: absolute;
+      align-items: center;
+      top: 0;
+      right: .basis(3)[];
+      height: .px(.min-font-sizes[@tetra])[];
 
-      .header-button {
+      .above(390px; {
+        position: static;
+        align-items: flex-end;
+      });
+
+      .above(sm; {
+        position: absolute;
+        align-items: center;
+        height: .px(.min-font-sizes[@giga])[];
+      });
+
+      .above(570px; {
+        position: static;
+        align-items: flex-end;
+        height: auto;
+      });
+
+      .header-button:last-of-type {
         margin-left: .basis(2)[];
+
+        .above(md; {
+          margin-left: .6rem;
+        });
+
+        .above(lg; {
+          margin-left: .basis(2)[];
+        });
       }
     }
   }
@@ -155,6 +243,11 @@ export default {
   .card {
     background-color: @very-dark;
     justify-self: stretch;
+    min-height: 20em;
+
+    .above(md; {
+      min-height: auto;
+    });
   }
 
   .bus-container {
@@ -162,6 +255,8 @@ export default {
     justify-content: center;
     align-items: center;
     grid-area: bus;
+    min-height: auto;
+    padding: .basis(5)[];
   }
 
   .status {
