@@ -10,7 +10,7 @@ module.exports = {
     max_memory_restart: '300M', // eslint-disable-line camelcase
     env: {
       NODE_ENV: 'production',
-      EXTERNAL_MODE: true,
+      // EXTERNAL_MODE: true,
     },
   }],
 }
