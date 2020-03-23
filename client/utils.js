@@ -13,7 +13,6 @@ const {
   host,
   wsPort,
   httpProtocol,
-  ipPort,
   ipHost,
 } = require('../config/config.js')
 
@@ -91,7 +90,7 @@ module.exports = {
 
     let ip
     try {
-      ip = await getIP(`${httpProtocol}${ipHost}${ipPort}`)
+      ip = await getIP(`${httpProtocol}${ipHost}`)
     } catch (error) {
       console.log(error)
     }
