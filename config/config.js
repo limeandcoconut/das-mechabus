@@ -11,7 +11,8 @@ module.exports = {
   httpProtocol: useProd ? 'https://' : 'http://',
   wsProtocol: useProd ? 'wss://' : 'ws://',
   wsPort: useProd ? '' : ':3535',
-  ipEndpoint: 'localhost:3257',
+  ipHost: useProd ? '54.200.31.197' : 'localhost',
+  ipPort: ':3257',
   gaProductionId: '',
   controllers: [
     {
