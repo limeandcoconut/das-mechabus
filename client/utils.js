@@ -33,7 +33,7 @@ const getIP = url => new Promise((resolve, reject) =>
 
 const wsEndpoint = `${wsProtocol}${host}${wsPort}`
 const isProd = () => process.env.NODE_ENV === 'production'
-const isExternal = () => process.env.EXTERNAL_MODE === true
+const isExternal = () => process.env.EXTERNAL_MODE === true || process.env.EXTERNAL_MODE === 'true'
 
 console.log(process.env.EXTERNAL_MODE)
 
@@ -84,6 +84,7 @@ module.exports = {
   decodeJWT: jwt => JSON.parse(Buffer.from(jwt.split('.')[1], 'base64').toString('utf-8')),
   getEndpoint: async () => {
     console.log(isExternal())
+    console.log('test')
     if (!isExternal()) {
       return wsEndpoint
     }
