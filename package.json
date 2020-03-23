@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "NODE_ENV=development node server/serve.js",
     "dev:external": "EXTERNAL_MODE=true NODE_ENV=development node server/serve.js",
-    "dev:prod-api": "USE_PROD_API=true NODE_ENV=development node server/serve.js",
+    "dev:prod-api:external": "EXTERNAL_MODE=true USE_PROD_API=true NODE_ENV=development node server/serve.js",
     "pack:prod": "NODE_ENV=production webpack --config config/webpack.config.js --progress --hide-modules",
     "pack:prod:external": "EXTERNAL_MODE=true NODE_ENV=production webpack --config config/webpack.config.js --progress --hide-modules",
     "serve:prod": "NODE_ENV=production node server/serve.js",
