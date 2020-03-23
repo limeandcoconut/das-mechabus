@@ -1,10 +1,13 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import {
-  wsEndpoint,
   controllers as configControllers,
 } from '../config/config'
-import { sleep, decodeJWT } from './utils'
+import {
+  sleep,
+  decodeJWT,
+  getEndpoint,
+} from './utils'
 
 Vue.use(Vuex)
 
@@ -137,7 +140,7 @@ const store = {
       }
       if (socket.readyState === WebSocket.CLOSED || socket.readyState === WebSocket.CLOSING) {
         commit('showError', 'Connection closed. Retrying...')
-        dispatch('initialize')
+        await dispatch('initialize')
         try {
           await state.authPromise
           commit('hideError')
@@ -217,9 +220,15 @@ const store = {
       data: payload,
     }),
 
-    initialize: ({ state, commit, dispatch }) => {
+    initialize: async ({ state, commit, dispatch }) => {
       console.log('init')
-      const socket = new WebSocket(`${wsEndpoint}`)
+      let socket
+      try {
+        socket = new WebSocket(`${await getEndpoint()}`)
+      } catch (error) {
+        commit('showError', 'Cannot connect.')
+        return
+      }
 
       const nameToIdMap = {}
       const idToNameMap = {}

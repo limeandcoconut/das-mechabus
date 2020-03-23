@@ -8,8 +8,33 @@ const {
   manifest,
   favicons,
 } = require('../config/meta.config')
+const {
+  wsProtocol,
+  host,
+  wsPort,
+  httpProtocol,
+  ipEndpoint,
+} = require('../config/config.js')
 
+const getIP = url => new Promise((resolve, reject) =>
+  fetch(url)
+  .then((response) => {
+    response.text().then((text) => {
+      console.log(text)
+      return resolve(text)
+    })
+  })
+  .catch((error) => {
+    console.log(error)
+    return reject(error)
+  }),
+)
+
+const wsEndpoint = `${wsProtocol}${host}${wsPort}`
 const isProd = () => process.env.NODE_ENV === 'production'
+const isExternal = () => process.env.EXTERNAL_MODE === true
+
+console.log(process.env.EXTERNAL_MODE)
 
 const defaultMeta = {
   title,
@@ -56,5 +81,19 @@ module.exports = {
     return final
   },
   decodeJWT: jwt => JSON.parse(Buffer.from(jwt.split('.')[1], 'base64').toString('utf-8')),
+  getEndpoint: async () => {
+    console.log(isExternal())
+    if (!isExternal()) {
+      return wsEndpoint
+    }
+
+    let ip
+    try {
+      ip = await getIP(`${httpProtocol}${ipEndpoint}`)
+    } catch (error) {
+      console.log(error)
+    }
+    return `${wsProtocol}${ip}${wsPort}`
+  },
 }
 

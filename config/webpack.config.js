@@ -70,6 +70,7 @@ const config = {
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
       'process.env.USE_PROD_API': process.env.USE_PROD_API,
+      'process.env.EXTERNAL_MODE': process.env.EXTERNAL_MODE,
     }),
     new CaseSensitivePathsPlugin(),
     new VueLoaderPlugin(),
