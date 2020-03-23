@@ -1,6 +1,6 @@
 module.exports = {
   apps: [{
-    name: 'das',
+    name: 'mechabus',
     script: 'server/serve.js',
 
     // Options reference: https://pm2.io/doc/en/runtime/reference/ecosystem-file/
