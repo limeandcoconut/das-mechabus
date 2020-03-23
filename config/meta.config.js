@@ -1,6 +1,6 @@
 const description = 'The control panel for Das Mechabus. Manage electrical systems and read resource levels.' // eslint-diable-line max-len
 const color = '#557c9b'
-const source = 'https://das-mechabus.jacobsmith.tech/images/logo-og.png'
+const source = 'https://mechabus.jacobsmith.tech/images/logo-og.png'
 // NOTE: This file is included in client. Don't put secrets in here. They go in keys.js
 
 const siteMeta = {
@@ -11,7 +11,7 @@ const siteMeta = {
   display: 'standalone',
   start_url: '/', // eslint-disable-line camelcase
   // Keep in sync with config.js
-  host: 'https://das-mechabus.jacobsmith.tech',
+  host: 'https://mechabus.jacobsmith.tech',
   description,
   color,
   og: {
@@ -120,7 +120,7 @@ const siteMeta = {
 
 // Cache cacheBust
 // C-C-C-COMBO BREAKER!
-siteMeta.favicons = siteMeta.favicons.reduce((favicons, {key, src: source}) => {
+siteMeta.favicons = siteMeta.favicons.reduce((favicons, { key, src: source }) => {
   favicons[key] = source + siteMeta.cacheBust
   return favicons
 }, {})

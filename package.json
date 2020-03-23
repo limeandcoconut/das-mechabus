@@ -12,7 +12,7 @@
     "serve:prod": "NODE_ENV=production node server/serve.js",
     "cp:hap": "sudo cp ./haproxy.cfg /etc/haproxy/haproxy.cfg",
     "restart:hap": "haproxy -c -f /etc/haproxy/haproxy.cfg && echo 'config is valid, reloading...' && sudo service haproxy start -sf",
-    "scp:build": "scp -r ./dist/ brain:das-mechabus/",
+    "scp:build": "scp -r ./dist/ brain:mechabus/",
     "clean": "rm dist/*"
   },
   "keywords": [],
