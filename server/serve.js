@@ -13,7 +13,9 @@ const xssFilter = require('x-xss-protection')
 
 const { frontendPort } = require('../config/config.js')
 
-const isDevelopment = require('../client/utils').isDev()
+let { isDev, isExternal } = require('../client/utils')
+const isDevelopment = isDev()
+isExternal = isExternal()
 const app = express()
 let compiler
 // In prod this will be done by HAProxy via rewrites
@@ -46,7 +48,7 @@ if (isDevelopment) {
   })
 
   // Set up content-security-policy
-  const contentSelf = ['\'self\'', 'vue-plinth.jacobsmith.tech', 'blob:', 'data:']
+  const contentSelf = ['\'self\'', 'mechabus.jacobsmith.tech', 'blob:', 'data:']
   const contentAnalytics = ['*.google-analytics.com', 'google-analytics.com']
   const contentFonts = ['*.fonts.gstatic.com', 'fonts.gstatic.com']
   app.use(csp({
@@ -61,7 +63,8 @@ if (isDevelopment) {
       fontSrc: [...contentSelf, ...contentFonts],
       imgSrc: [...contentSelf, ...contentAnalytics],
       prefetchSrc: [...contentSelf, ...contentFonts],
-      connectSrc: [...contentSelf, ...contentAnalytics, ...contentFonts, '10.0.0.4:3998'],
+      // Unfortunately this needs to be wide open for external environments
+      connectSrc: isExternal ? '*' : [...contentSelf, ...contentAnalytics, ...contentFonts, '10.0.0.4'],
       // TODO: Add a report URI if you like
       // reportUri
     },

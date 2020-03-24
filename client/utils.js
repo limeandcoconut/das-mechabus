@@ -65,6 +65,7 @@ if (isProd()) {
 module.exports = {
   isDev: () => process.env.NODE_ENV === 'development',
   isProd,
+  isExternal,
   sleep: time => new Promise(resolve => setTimeout(resolve, time)),
   defaultMeta,
   extendMeta: (meta) => {
