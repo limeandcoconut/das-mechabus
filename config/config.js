@@ -11,7 +11,8 @@ module.exports = {
   httpProtocol: useProd ? 'https://' : 'http://',
   wsProtocol: useProd ? 'wss://' : 'ws://',
   wsPort: useProd ? '' : ':3535',
-  ipHost: useProd ? 'ip-recorder.jacobsmith.tech' : 'localhost:3257',
+  ipPort: ':3257',
+  ipHost: useProd ? 'ip-recorder.jacobsmith.tech' : 'localhost',
   gaProductionId: '',
   controllers: [
     {
