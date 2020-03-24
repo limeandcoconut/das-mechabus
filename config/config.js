@@ -10,9 +10,8 @@ module.exports = {
   host: useProd ? 'mechabus.jacobsmith.tech' : 'localhost',
   httpProtocol: useProd ? 'https://' : 'http://',
   wsProtocol: useProd ? 'wss://' : 'ws://',
-  wsPort: useProd ? '' : ':3535',
-  ipPort: ':3257',
-  ipHost: useProd ? 'ip-recorder.jacobsmith.tech' : 'localhost',
+  wsPort: ':3535',
+  ipHost: useProd ? 'ip-recorder.jacobsmith.tech' : 'localhost:3257',
   gaProductionId: '',
   controllers: [
     {
