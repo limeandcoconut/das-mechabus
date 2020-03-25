@@ -1,12 +1,12 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import {
+  wsEndpoint,
   controllers as configControllers,
 } from '../config/config'
 import {
   sleep,
   decodeJWT,
-  getEndpoint,
 } from './utils'
 
 Vue.use(Vuex)
@@ -224,7 +224,7 @@ const store = {
       console.log('init')
       let socket
       try {
-        socket = new WebSocket(`${await getEndpoint()}`)
+        socket = new WebSocket(`${wsEndpoint}`)
       } catch (error) {
         commit('showError', 'Cannot connect.')
         return
