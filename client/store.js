@@ -25,6 +25,7 @@ const store = {
     controllers: {},
     nameToIdMap: {},
     socket: null,
+    socketId: null,
   },
 
   getters: {
@@ -113,6 +114,10 @@ const store = {
     setSocket(state, socket) {
       state.socket = socket
     },
+
+    setSocketId(state, socketId) {
+      state.socketId = socketId
+    },
   },
 
   actions: {
@@ -124,12 +129,15 @@ const store = {
       commit('hideError')
     },
 
-    send: async ({ state: { socket }, dispatch }, payload) => {
+    send: async ({ state: { socket, socketId }, dispatch }, payload) => {
       if (!await dispatch('manageSocket')) {
         return false
       }
       if (!payload.jwt) {
         payload.jwt = localStorage.getItem('jwt')
+      }
+      if (typeof payload.id === 'undefined') {
+        payload.id = socketId
       }
       socket.send(JSON.stringify(payload))
     },
@@ -256,6 +264,7 @@ const store = {
         if (type === 'auth') {
           localStorage.setItem('jwt', data.jwt)
           dispatch('scheduleRefresh', data.jwt)
+          commit('setSocketId', data.id)
           commit('resolveAuth')
           return
         }
