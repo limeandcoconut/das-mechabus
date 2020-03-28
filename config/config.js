@@ -10,7 +10,7 @@ if (useProd) {
   host = isExternal ? 'mechabus.jacobsmith.tech' : 'das-mechabus.jacobsmith.tech'
 }
 
-const wsPort = isProd && !isExternal ? ':3535' : ''
+const wsPort = isProd ? '' : ':3535'
 
 module.exports = {
   // Update this url in ./meta.config.js too. It saves a notable chunk from the bundles by doing it manually.
