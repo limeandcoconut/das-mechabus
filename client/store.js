@@ -142,10 +142,7 @@ const store = {
     },
 
     manageSocket: async ({ state: { socket }, state, dispatch, commit }, retryAttepts = 5) => {
-      if (socket.readyState === WebSocket.OPEN) {
-        return true
-      }
-      if (socket.readyState === WebSocket.CLOSED || socket.readyState === WebSocket.CLOSING) {
+      if (!socket || socket.readyState === WebSocket.CLOSED || socket.readyState === WebSocket.CLOSING) {
         commit('showError', 'Connection closed. Retrying...')
         await dispatch('initialize')
         try {
@@ -155,6 +152,9 @@ const store = {
           commit('showError', error)
         }
         return
+      }
+      if (socket.readyState === WebSocket.OPEN) {
+        return true
       }
       if (socket.readyState === WebSocket.CONNECTING) {
         if (retryAttepts > 0) {
