@@ -48,7 +48,7 @@ if (isDevelopment) {
   })
 
   // Set up content-security-policy
-  const contentSelf = ['\'self\'', 'mechabus.jacobsmith.tech', 'blob:', 'data:']
+  const contentSelf = ['\'self\'', 'das-mechabus.jacobsmith.tech', 'mechabus.jacobsmith.tech', 'blob:', 'data:']
   const contentAnalytics = ['*.google-analytics.com', 'google-analytics.com']
   const contentFonts = ['*.fonts.gstatic.com', 'fonts.gstatic.com']
   app.use(csp({
