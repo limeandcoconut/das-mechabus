@@ -5,12 +5,16 @@ const isExternal = process.env.EXTERNAL_MODE === true || process.env.EXTERNAL_MO
 const useProd = isProd || process.env.USE_PROD_API
 
 const wsProtocol = useProd ? 'wss://' : 'ws://'
-const host = useProd ? 'mechabus.jacobsmith.tech' : 'localhost'
+let host = 'localhost'
+if (useProd) {
+  host = isExternal ? 'mechabus.jacobsmith.tech' : 'das-mechabus.jacobsmith.tech'
+}
+
 const wsPort = isProd && !isExternal ? ':3535' : ''
 
 module.exports = {
   // Update this url in ./meta.config.js too. It saves a notable chunk from the bundles by doing it manually.
-  productionHost: 'https://mechabus.jacobsmith.tech',
+  productionHost: `https://${host}`,
   frontendPort: 3015,
   wsEndpoint: `${wsProtocol}${host}${wsPort}`,
   gaProductionId: '',
