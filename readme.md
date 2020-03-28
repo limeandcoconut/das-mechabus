@@ -1,4 +1,6 @@
-![A CSR vue project off of which to base your apps](/public/images/logo-full.png)
+![A CSR vue project off of which to base your apps](/public/images/logo-pg.png)
+
+# TODO: Update this readme
 
 ## Gettings started
 Run `npm run dev` to start webpacking and serving to `localhost:3005`

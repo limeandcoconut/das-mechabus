@@ -1,5 +1,5 @@
 const description = 'The control panel for Das Mechabus. Manage electrical systems and read resource levels.' // eslint-diable-line max-len
-const color = '#557c9b'
+const color = '#222432'
 const source = 'https://mechabus.jacobsmith.tech/images/logo-og.png'
 // NOTE: This file is included in client. Don't put secrets in here. They go in keys.js
 
@@ -27,7 +27,7 @@ const siteMeta = {
     creator: '@limeandcoconut',
     image: {
       src: source,
-      alt: 'TODO',
+      alt: 'A stylized letter "D" used as a logo.',
     },
     card: 'summary',
   },
@@ -109,8 +109,8 @@ const siteMeta = {
   // Used in asset generation
   manifestIcons: [
     {
-      src: '/android-chrome-512x512.png',
-      sizes: [72, 96, 128, 144, 152, 192, 384, 512],
+      src: '/android-chrome-256x256.png',
+      sizes: [72, 96, 128, 144, 152, 192, 256],
       destination: '/meta',
     },
   ],
