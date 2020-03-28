@@ -12,8 +12,6 @@ const {
 const isProd = () => process.env.NODE_ENV === 'production'
 const isExternal = () => process.env.EXTERNAL_MODE === true || process.env.EXTERNAL_MODE === 'true'
 
-console.log(process.env.EXTERNAL_MODE)
-
 const defaultMeta = {
   title,
   meta: [

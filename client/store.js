@@ -103,7 +103,6 @@ const store = {
     },
 
     setController(state, controller) {
-      console.log(controller)
       Vue.set(state.controllers, controller.id, controller)
     },
 
@@ -159,7 +158,6 @@ const store = {
       }
       if (socket.readyState === WebSocket.CONNECTING) {
         if (retryAttepts > 0) {
-          console.log('retry')
           commit('showError', 'Connecting...')
           await sleep(1000)
           await dispatch('manageSocket', retryAttepts - 1)
@@ -229,7 +227,6 @@ const store = {
     }),
 
     initialize: async ({ state, commit, dispatch }) => {
-      console.log('init')
       let socket
       try {
         socket = new WebSocket(`${wsEndpoint}`)
@@ -259,7 +256,6 @@ const store = {
 
       socket.addEventListener('message', ({ data: message }) => {
         let { type, data } = JSON.parse(message)
-        console.log(type, data)
 
         if (type === 'auth') {
           localStorage.setItem('jwt', data.jwt)
@@ -285,11 +281,9 @@ const store = {
             controller.button = button
             commit('setController', controller)
           }
-          console.log('updated')
 
           if (resolveInitPromse) {
             resolveInitPromse()
-            console.log('resolved')
             resolveInitPromse = null
           }
           return

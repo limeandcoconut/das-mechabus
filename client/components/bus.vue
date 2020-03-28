@@ -63,7 +63,6 @@ export default {
       return
     }
 
-    console.log('loaded')
     this.loaded = true
 
     if (isIOSDevice()) {
