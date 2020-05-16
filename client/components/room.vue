@@ -3,6 +3,7 @@
     class="room"
     :class="{
       lit: state,
+      disabled,
       locked,
       'animate-out': animateOut,
       'animate-in': animateIn,
@@ -20,6 +21,10 @@ export default {
       type: Number,
       required: true,
     },
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
   },
 
   data() {
@@ -32,6 +37,9 @@ export default {
 
   methods: {
     handleClick() {
+      if (this.disabled) {
+        return
+      }
       this.locked = true
       const key = this.state ? 'animateOut' : 'animateIn'
       this[key] = true
@@ -88,6 +96,14 @@ export default {
     background-color: @yellow;
     opacity: 0;
     transition: opacity .2s ease-in;
+  }
+
+  &.disabled {
+    background-color: @very-dark;
+
+    &:hover:before {
+      opacity: 0;
+    }
   }
 
   &.locked:hover:before {

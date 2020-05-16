@@ -8,20 +8,26 @@
     :style="ratioStyles">
     <Room
       :state="0"
+      :disabled="!getController('books')"
       class="books"/>
     <Room
       :state="0"
+      :disabled="!getController('bed')"
       class="bed"/>
     <Room
       :state="0"
+      :disabled="!getController('bath')"
       class="bath"/>
     <Room
       class="kitchen"
       :state="roomState('kitchen')"
+      :disabled="!getController('kitchen')"
       @click.native="() => toggleController('kitchen')"/>
     <Room
-      :state="0"
-      class="living"/>
+      class="living"
+      :state="roomState('living')"
+      :disabled="!getController('living')"
+      @click.native="() => toggleController('living')"/>
   </div>
 </template>
 
@@ -76,9 +82,13 @@ export default {
 
   methods: {
 
+    getController(room) {
+      return this.controllers[this.nameToIdMap[room]]
+    },
+
     roomState(room) {
-      const id = this.nameToIdMap[room]
-      return this.controllers[id].state
+      const controller = this.getController(room)
+      return controller ? controller.state : 0
     },
 
     toggleController(room) {
