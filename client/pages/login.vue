@@ -1,13 +1,18 @@
 <template>
   <div class="layout">
     <div class="container">
-      <LaserContainer>
-        <input
-          v-model="password"
-          class="password"
-          type="password"
-          name="password" />
-      </LaserContainer>
+      <form
+        onsubmit="return false;"
+        @submit.prevent="login">
+        <LaserContainer>
+          <input
+            v-model="password"
+            class="password"
+            type="password"
+            name="password"
+            autofocus />
+        </LaserContainer>
+      </form>
 
       <LaserButton
         class="submit"
