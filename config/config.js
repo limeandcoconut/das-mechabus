@@ -23,5 +23,17 @@ module.exports = {
       name: 'kitchen',
       id: 'swi2.1',
     },
+    {
+      name: 'living',
+      id: 'swi1.1',
+    },
+    {
+      name: 'bath',
+      id: 'swi5.1',
+    },
+    {
+      name: 'bed',
+      id: 'swi5.2',
+    },
   ],
 }
