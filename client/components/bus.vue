@@ -11,13 +11,15 @@
       :disabled="!getController('books')"
       class="books"/>
     <Room
-      :state="0"
+      class="bed"
+      :state="roomState('bed')"
       :disabled="!getController('bed')"
-      class="bed"/>
+      @click.native="() => toggleController('bed')"/>
     <Room
-      :state="0"
+      class="bath"
+      :state="roomState('bath')"
       :disabled="!getController('bath')"
-      class="bath"/>
+      @click.native="() => toggleController('bath')"/>
     <Room
       class="kitchen"
       :state="roomState('kitchen')"
