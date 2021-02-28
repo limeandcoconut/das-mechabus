@@ -20,7 +20,9 @@
         </LaserButton>
       </div>
     </div>
-    <div class="status card"></div>
+    <div class="water card">
+      <WaterSystem />
+    </div>
     <div class="power card"></div>
     <div class="bus-container card">
       <Bus class="bus"/>
@@ -36,6 +38,7 @@ import {
   twitter,
 } from '../../config/meta.config'
 import Bus from '../components/bus.vue'
+import WaterSystem from '../components/water-system.vue'
 import LaserButton from '../components/laser-button.vue'
 import { extendMeta } from '../utils'
 import { mapActions } from 'vuex'
@@ -44,8 +47,9 @@ export default {
   name: 'home',
 
   components: {
-    Bus,
     LaserButton,
+    Bus,
+    WaterSystem,
   },
 
   metaInfo: () => extendMeta({
@@ -71,9 +75,20 @@ export default {
       this.$router.push({ name: 'login' })
     },
 
+    blinkLight() {
+      console.log('foo')
+      this.send({
+        type: 'operate',
+        data: {
+          gpio: 17,
+        },
+      })
+    },
+
     ...mapActions([
       'refreshControllers',
       'deauthorize',
+      'send',
     ]),
   },
 }
@@ -88,7 +103,7 @@ export default {
   grid-template-columns: 1fr 1fr;
   grid-template-areas:
   "bus bus"
-  "status status"
+  "water water"
   "power power"
   "big big";
   grid-column-gap: .basis(3)[];
@@ -102,7 +117,7 @@ export default {
   .above(sm; {
     grid-template-columns: repeat(12, 1fr);
     grid-template-areas:
-    "status status status status status bus    bus    bus    bus    bus    bus    bus"
+    "water water water water water bus    bus    bus    bus    bus    bus    bus"
     "big    big    big    big    big    bus    bus    bus    bus    bus    bus    bus"
     "big    big    big    big    big    bus    bus    bus    bus    bus    bus    bus"
     "power  power  power  power  power  power  power  power  power  power  power  power";
@@ -112,7 +127,7 @@ export default {
   .above(md; {
     grid-template-columns: repeat(12, 1fr);
     grid-template-areas:
-    "status status status power  power  power  power  power  bus    bus   bus   bus"
+    "water water water power  power  power  power  power  bus    bus   bus   bus"
     "big    big    big    big    big    big    big    big    bus    bus   bus   bus"
     "big    big    big    big    big    big    big    big    bus    bus   bus   bus";
   });
@@ -120,7 +135,7 @@ export default {
   .above(lg; {
     padding-top: .basis(12)[];
     grid-template-areas:
-    "status status status power  power  power  power  power  power  bus   bus   bus"
+    "water water water power  power  power  power  power  power  bus   bus   bus"
     "big    big    big    big    big    big    big    big    big    bus   bus   bus"
     "big    big    big    big    big    big    big    big    big    bus   bus   bus";
   });
@@ -259,8 +274,8 @@ export default {
     padding: .basis(5)[];
   }
 
-  .status {
-    grid-area: status;
+  .water {
+    grid-area: water;
   }
 
   .power {

@@ -98,7 +98,9 @@ export default {
       this.tellController({ id, toggle: 1 })
     },
 
-    ...mapMutations(['setControllerState']),
+    ...mapMutations([
+      'setControllerState',
+    ]),
 
     ...mapActions([
       'showError',

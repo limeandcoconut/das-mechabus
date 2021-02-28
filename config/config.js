@@ -35,5 +35,17 @@ module.exports = {
       name: 'bed',
       id: 'swi5.2',
     },
+    {
+      name: 'dump',
+      id: 'dump',
+    },
+    {
+      name: 'fill',
+      id: 'fill',
+    },
+    {
+      name: 'pump',
+      id: 'pump',
+    },
   ],
 }

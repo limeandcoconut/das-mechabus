@@ -265,7 +265,7 @@ const store = {
           return
         }
         if (type === 'update') {
-          for (const { id, state: lightState, milliseconds, button } of data) {
+          for (const { id, state: controllerState } of data) {
             if (state.refreshResolve) {
               commit('resolveRefresh')
             }
@@ -276,9 +276,7 @@ const store = {
                 id,
               }
             }
-            controller.state = lightState
-            controller.milliseconds = milliseconds
-            controller.button = button
+            controller.state = controllerState
             commit('setController', controller)
           }
 
