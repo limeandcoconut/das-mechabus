@@ -3,6 +3,7 @@ const path = require('path')
 // Core Deps required for packing
 const webpack = require('webpack')
 const HTMLPlugin = require('html-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const { VueLoaderPlugin } = require('vue-loader')
 const MinifyPlugin = require('babel-minify-webpack-plugin')
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin')
@@ -49,6 +50,7 @@ const config = {
         test: /\.less$/,
         use: [
           'vue-style-loader',
+          MiniCssExtractPlugin.loader,
           {
             loader: 'css-loader',
             options: {
@@ -69,6 +71,7 @@ const config = {
     ],
   },
   plugins: [
+    new MiniCssExtractPlugin(),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
       'process.env.USE_PROD_API': process.env.USE_PROD_API,
