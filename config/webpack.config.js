@@ -99,7 +99,8 @@ const config = {
     timings: true,
     version: false,
     warnings: true,
-    children: true,
+    // Enable for more output
+    children: false,
   },
 }
 
