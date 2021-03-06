@@ -130,7 +130,7 @@ if (isProd) {
     new Visualizer({ filename: '../stats.html' }),
     new MinifyPlugin(),
     new CompressionPlugin({
-      filename: '[path].br[query]',
+      filename: '[path][base].br[query]',
       test: /\.js$|\.css$/,
       algorithm: 'brotliCompress',
       compressionOptions: { level: 11 },
@@ -187,12 +187,12 @@ if (isProd) {
       includeDirectory: false,
     }),
     // Copy icons and other assets
-    new CopyPlugin(siteMeta.copyMeta.map(({ from = '', to, name }) => {
-      return {
+    new CopyPlugin({
+      patterns: siteMeta.copyMeta.map(({ from = '', to, name }) => ({
         from: path.join(__dirname, '../public', from, name),
         to,
-      }
-    })),
+      })),
+    }),
     new DuplicatePackageCheckerPlugin({
       // Also show module that is requiring each duplicate package (default: false)
       verbose: true,
@@ -200,20 +200,24 @@ if (isProd) {
       // emitError: true,
     }),
     // Write sitemap
-    new SitemapPlugin(productionHost, [
-      {
-        path: '/',
-        priority: 1,
+    new SitemapPlugin({
+      base: productionHost,
+      paths: [
+        {
+          path: '/',
+          priority: 1,
+        },
+        {
+          path: '/404',
+          priority: 0,
+        },
+      ],
+      options: {
+        // Last update is now
+        lastmod: true,
+        skipgzip: true,
+        filename: path.join('proxy_to_site_root', 'sitemap.xml'),
       },
-      {
-        path: '/404',
-        priority: 0,
-      },
-    ], {
-      // Last update is now
-      lastMod: true,
-      skipGzip: true,
-      fileName: path.join('proxy_to_site_root', 'sitemap.xml'),
     }),
     // Write robots
     new RobotstxtPlugin({
@@ -235,7 +239,6 @@ if (isProd) {
   // config.devtool = 'eval'
 
   config.plugins.push(
-    new webpack.NoEmitOnErrorsPlugin(),
     new WebpackBuildNotifierPlugin({
       title: 'Webpack Client Build',
       suppressSuccess: true,
