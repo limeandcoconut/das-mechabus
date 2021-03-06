@@ -53,6 +53,9 @@ const config = {
             loader: 'css-loader',
             options: {
               sourceMap: !isProd,
+              // This make css-loader skip inlining fonts (a good choice since
+              // these are intended as backups)
+              url: url => !/\/fonts\/.*\.woff2/.test(url),
             },
           },
           {
@@ -63,7 +66,15 @@ const config = {
               },
             },
           },
-          'less-loader',
+          {
+            loader: 'less-loader',
+            options: {
+              lessOptions: {
+                // Look into this if you have problems with nested relative urls
+                // relativeUrls: false,
+              },
+            },
+          },
         ],
       },
     ],
