@@ -40,14 +40,14 @@ export default {
 
   metaInfo: defaultMeta,
 
-  data() {
+  data () {
     return {
       password: '',
     }
   },
 
   methods: {
-    async login() {
+    async login () {
       if (this.password.length === 0) {
         this.showError('Enter a password')
         return

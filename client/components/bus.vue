@@ -47,7 +47,7 @@ export default {
     Loading,
   },
 
-  data() {
+  data () {
     return {
       loaded: false,
       ratioStyles: null,
@@ -63,7 +63,7 @@ export default {
     ...mapGetters(['initPromise']),
   },
 
-  async mounted() {
+  async mounted () {
     try {
       await this.refreshControllers(true)
     } catch (error) {
@@ -84,16 +84,16 @@ export default {
 
   methods: {
 
-    getController(room) {
+    getController (room) {
       return this.controllers[this.nameToIdMap[room]]
     },
 
-    roomState(room) {
+    roomState (room) {
       const controller = this.getController(room)
       return controller ? controller.state : 0
     },
 
-    toggleController(room) {
+    toggleController (room) {
       const id = this.nameToIdMap[room]
       this.tellController({ id, toggle: 1 })
     },

@@ -40,7 +40,7 @@ export default {
     Loading,
   },
 
-  data() {
+  data () {
     return {
       loaded: false,
       mode: null,
@@ -56,7 +56,7 @@ export default {
     ...mapGetters(['initPromise']),
   },
 
-  async mounted() {
+  async mounted () {
 
     if (
       this.controllerState('dump') &&
@@ -90,7 +90,7 @@ export default {
   },
 
   methods: {
-    setMode(mode) {
+    setMode (mode) {
       this.mode = mode
       if (mode === 'dump') {
         this.setController('dump', 1)
@@ -117,16 +117,16 @@ export default {
       }
     },
 
-    getController(name) {
+    getController (name) {
       return this.controllers[this.nameToIdMap[name]]
     },
 
-    controllerState(name) {
+    controllerState (name) {
       const controller = this.getController(name)
       return controller ? controller.state : 0
     },
 
-    setController(name, state) {
+    setController (name, state) {
       const id = this.nameToIdMap[name]
       this.tellController({ id, state })
     },

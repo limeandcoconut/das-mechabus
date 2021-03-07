@@ -70,12 +70,12 @@ export default {
   }),
 
   methods: {
-    logout() {
+    logout () {
       this.deauthorize()
       this.$router.push({ name: 'login' })
     },
 
-    blinkLight() {
+    blinkLight () {
       console.log('foo')
       this.send({
         type: 'operate',

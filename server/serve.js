@@ -31,7 +31,7 @@ if (isDevelopment) {
 
   // Don't bother with security on dev
 
-  app.use(function(request, response, next) {
+  app.use((request, response, next) => {
     response.locals.nonce = crypto.randomBytes(16).toString('base64')
     next()
   })
@@ -102,7 +102,7 @@ app.use('/dist/', expressStaticGzip(path.resolve(__dirname, '../', 'dist'), {
   index: false,
   orderPreference: ['br'],
   serveStatic: {
-    setHeaders(response, path) {
+    setHeaders (response, path) {
       // For best results manifest.json must be served with application/manifest+json
       if (/\/dist\/manifest\.json\W?/.test(path)) {
         response.set('Content-Type', 'application/manifest+json; charset=UTF-8')
@@ -114,7 +114,7 @@ app.use('/dist/', expressStaticGzip(path.resolve(__dirname, '../', 'dist'), {
 if (isDevelopment) {
   app.use('*', (request, response, next) => {
     let filename = path.join(compiler.outputPath, 'index.html')
-    compiler.outputFileSystem.readFile(filename, function(error, result) {
+    compiler.outputFileSystem.readFile(filename, (error, result) => {
       if (error) {
         return next(error)
       }

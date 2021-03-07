@@ -44,21 +44,21 @@ const store = {
   },
 
   mutations: {
-    setInitPromise(state, initPromise) {
+    setInitPromise (state, initPromise) {
       state.initPromise = initPromise
     },
 
-    showError(state, message) {
+    showError (state, message) {
       state.showErrorMessage = true
       state.errorMessage = message
     },
 
-    hideError(state) {
+    hideError (state) {
       state.showErrorMessage = false
       state.errorMessage = ''
     },
 
-    resolveAuth(state) {
+    resolveAuth (state) {
       if (typeof state.authResolve !== 'function') {
         // eslint-disable-next-line unicorn/prefer-type-error
         throw new Error('Not awaiting authentication.')
@@ -68,7 +68,7 @@ const store = {
       state.authReject = null
     },
 
-    rejectAuth(state) {
+    rejectAuth (state) {
       if (typeof state.authReject !== 'function') {
         // eslint-disable-next-line unicorn/prefer-type-error
         throw new Error('Not awaiting authentication.')
@@ -78,7 +78,7 @@ const store = {
       state.authReject = null
     },
 
-    resolveRefresh(state) {
+    resolveRefresh (state) {
       if (typeof state.refreshResolve !== 'function') {
         // eslint-disable-next-line unicorn/prefer-type-error
         throw new Error('Not awaiting update.')
@@ -88,7 +88,7 @@ const store = {
       state.refreshReject = null
     },
 
-    rejectRefresh(state) {
+    rejectRefresh (state) {
       if (typeof state.refreshReject !== 'function') {
         // eslint-disable-next-line unicorn/prefer-type-error
         throw new Error('Not awaiting update.')
@@ -98,23 +98,23 @@ const store = {
       state.refreshReject = null
     },
 
-    setControllers(state, controllers) {
+    setControllers (state, controllers) {
       state.controllers = controllers
     },
 
-    setController(state, controller) {
+    setController (state, controller) {
       Vue.set(state.controllers, controller.id, controller)
     },
 
-    setNameToIdMap(state, nameToIdMap) {
+    setNameToIdMap (state, nameToIdMap) {
       state.nameToIdMap = nameToIdMap
     },
 
-    setSocket(state, socket) {
+    setSocket (state, socket) {
       state.socket = socket
     },
 
-    setSocketId(state, socketId) {
+    setSocketId (state, socketId) {
       state.socketId = socketId
     },
   },
@@ -190,7 +190,7 @@ const store = {
       localStorage.removeItem('jwt')
     },
 
-    scheduleRefresh({ dispatch }, jwt) {
+    scheduleRefresh ({ dispatch }, jwt) {
       const { exp } = decodeJWT(jwt)
       // Refresh the token 2 minutes before it expires
       setTimeout(() => {

@@ -27,7 +27,7 @@ export default {
     },
   },
 
-  data() {
+  data () {
     return {
       locked: false,
       animateIn: false,
@@ -36,7 +36,7 @@ export default {
   },
 
   methods: {
-    handleClick() {
+    handleClick () {
       if (this.disabled) {
         return
       }

@@ -1,6 +1,6 @@
 {
   "name": "das-mechabus",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A CSR vue project off of which to base your apps",
   "main": "client/client-entry.js",
   "scripts": {
@@ -15,7 +15,8 @@
     "restart:hap": "haproxy -c -f /etc/haproxy/haproxy.cfg && echo 'config is valid, reloading...' && sudo service haproxy start -sf",
     "scp:build": "scp -r ./dist/ brain:das-mechabus/",
     "scp:build:external": "scp -r ./dist/ dev:das-mechabus/",
-    "clean": "rm dist/*"
+    "clean": "rm dist/*",
+    "lint:fix": "eslint . --max-warnings 0 --format codeframe --ext .js,.vue --fix"
   },
   "keywords": [],
   "author": "Jacob Smith <js@jacobsmith.tech>",
@@ -79,7 +80,7 @@
   },
   "devDependencies": {
     "eslint": "^7.21.0",
-    "eslint-config-limeandcoconut": "^2.3.1",
+    "eslint-config-limeandcoconut": "^3.0.0",
     "eslint-plugin-html": "^6.1.1",
     "eslint-plugin-unicorn": "^28.0.2",
     "eslint-plugin-vue": "^7.7.0"
