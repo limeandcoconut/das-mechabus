@@ -20,7 +20,7 @@
     <input type="radio" id="pump" name="mode" value="pump"
       :checked="mode === 'pump'"
       @click="setMode('pump')">
-    <label for="pump">Dump</label>
+    <label for="pump">Pump</label>
     <input type="radio" id="city" name="mode" value="city"
       :checked="mode === 'city'"
       @click="setMode('city')">
