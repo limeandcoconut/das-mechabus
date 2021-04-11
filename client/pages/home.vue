@@ -1,10 +1,5 @@
 <template>
-  <Loading
-    v-if="!loaded"
-  />
-  <div
-    v-else
-    class="layout">
+  <div class="layout">
     <div class="header">
       <div class="title">
         Das Mechabus
@@ -25,14 +20,19 @@
         </LaserButton>
       </div>
     </div>
-    <div class="water card">
-      <WaterSystem />
-    </div>
-    <div class="power card"></div>
-    <div class="bus-container card">
-      <Bus class="bus"/>
-    </div>
-    <div class="big card"></div>
+    <Loading
+      v-if="!loaded"
+    />
+    <template v-else>
+      <div class="water card">
+        <WaterSystem />
+      </div>
+      <div class="power card"></div>
+      <div class="bus-container card">
+        <Bus class="bus"/>
+      </div>
+      <div class="big card"></div>
+    </template>
   </div>
 </template>
 

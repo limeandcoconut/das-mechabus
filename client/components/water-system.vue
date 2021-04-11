@@ -50,20 +50,20 @@ export default {
     mode () {
       if (
         this.controllerState('dump') &&
-      !this.controllerState('fill') &&
-      !this.controllerState('pump')
+        !this.controllerState('fill') &&
+        !this.controllerState('pump')
       ) {
         return 'dump'
       } else if (
         !this.controllerState('dump') &&
-      this.controllerState('fill') &&
-      !this.controllerState('pump')
+        this.controllerState('fill') &&
+        !this.controllerState('pump')
       ) {
         return 'fill'
       } else if (
         !this.controllerState('dump') &&
-      !this.controllerState('fill') &&
-      this.controllerState('pump')
+        !this.controllerState('fill') &&
+        this.controllerState('pump')
       ) {
         return 'pump'
       } else if (
