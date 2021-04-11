@@ -4,7 +4,7 @@
   />
   <div v-else-if="!getController('dump') &&  !getController('fill') && !getController('pump')"
     class="error">
-    Error
+    Error: Incoherent State
   </div>
   <div v-else
     class="water-system">
@@ -34,7 +34,7 @@ import { mapActions, mapState, mapGetters, mapMutations } from 'vuex'
 import Loading from './loading.vue'
 
 export default {
-  name: 'bus',
+  name: 'water-system',
 
   components: {
     Loading,
@@ -43,49 +43,54 @@ export default {
   data () {
     return {
       loaded: false,
-      mode: null,
     }
   },
 
   computed: {
+    mode () {
+      if (
+        this.controllerState('dump') &&
+      !this.controllerState('fill') &&
+      !this.controllerState('pump')
+      ) {
+        return 'dump'
+      } else if (
+        !this.controllerState('dump') &&
+      this.controllerState('fill') &&
+      !this.controllerState('pump')
+      ) {
+        return 'fill'
+      } else if (
+        !this.controllerState('dump') &&
+      !this.controllerState('fill') &&
+      this.controllerState('pump')
+      ) {
+        return 'pump'
+      } else if (
+        // If the state is incoherent then default it to 'city'
+        !(
+          !this.controllerState('dump') &&
+          !this.controllerState('fill') &&
+          !this.controllerState('pump')
+        )
+      ) {
+      // This might not belong here
+        this.setMode('city')
+      }
+      return 'city'
+    },
+
     ...mapState([
       'controllers',
       'nameToIdMap',
+      'refreshPromise',
     ]),
 
     ...mapGetters(['initPromise']),
   },
 
   async mounted () {
-
-    if (
-      this.controllerState('dump') &&
-      !this.controllerState('fill') &&
-      !this.controllerState('pump')
-    ) {
-      this.mode = 'dump'
-    } else if (
-      !this.controllerState('dump') &&
-      this.controllerState('fill') &&
-      !this.controllerState('pump')
-    ) {
-      this.mode = 'fill'
-    } else if (
-      !this.controllerState('dump') &&
-      !this.controllerState('fill') &&
-      this.controllerState('pump')
-    ) {
-      this.mode = 'pump'
-    } else if (
-      !this.controllerState('dump') &&
-      !this.controllerState('fill') &&
-      !this.controllerState('pump')
-    ) {
-      this.mode = 'city'
-    } else {
-      this.setMode('city')
-    }
-
+    await this.refreshPromise
     this.loaded = true
   },
 
@@ -138,7 +143,6 @@ export default {
     ...mapActions([
       'showError',
       'tellController',
-      'refreshControllers',
     ]),
   },
 }

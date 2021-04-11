@@ -58,18 +58,14 @@ export default {
     ...mapState([
       'controllers',
       'nameToIdMap',
+      'refreshPromise',
     ]),
 
     ...mapGetters(['initPromise']),
   },
 
   async mounted () {
-    try {
-      await this.refreshControllers(true)
-    } catch (error) {
-      this.showError(error)
-      return
-    }
+    await this.refreshPromise
 
     this.loaded = true
 
@@ -105,7 +101,6 @@ export default {
     ...mapActions([
       'showError',
       'tellController',
-      'refreshControllers',
     ]),
   },
 }

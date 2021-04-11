@@ -1,5 +1,10 @@
 <template>
-  <div class="layout">
+  <Loading
+    v-if="!loaded"
+  />
+  <div
+    v-else
+    class="layout">
     <div class="header">
       <div class="title">
         Das Mechabus
@@ -37,6 +42,7 @@ import {
   og,
   twitter,
 } from '../../config/meta.config'
+import Loading from '../components/loading.vue'
 import Bus from '../components/bus.vue'
 import WaterSystem from '../components/water-system.vue'
 import LaserButton from '../components/laser-button.vue'
@@ -47,6 +53,7 @@ export default {
   name: 'home',
 
   components: {
+    Loading,
     LaserButton,
     Bus,
     WaterSystem,
@@ -68,6 +75,22 @@ export default {
       { rel: 'canonical', href: 'https://jacobsmith.tech' },
     ],
   }),
+
+  data () {
+    return {
+      loaded: false,
+    }
+  },
+
+  async mounted  () {
+    try {
+      await this.refreshControllers(true)
+      this.loaded = true
+    } catch (error) {
+      this.showError(error)
+      return
+    }
+  },
 
   methods: {
     logout () {

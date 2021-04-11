@@ -60,7 +60,6 @@ export default {
     },
 
     ...mapActions([
-      'refreshControllers',
       'showError',
       'authorize',
     ]),
