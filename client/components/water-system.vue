@@ -2,12 +2,12 @@
   <Loading
     v-if="!loaded"
   />
-  <div v-else-if="(!getController('dump') &&  !getController('fill') && !getController('pump')) || !mode"
-    class="error">
-    Error: Incoherent State
-  </div>
   <div v-else
     class="water-system">
+    <div v-if="(!getController('dump') &&  !getController('fill') && !getController('pump')) || !mode"
+      class="error">
+      Error: Incoherent State
+    </div>
 
     <input type="radio" id="dump" name="mode" value="dump"
       :checked="mode === 'dump'"
