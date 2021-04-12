@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import { mapActions, mapState, mapGetters, mapMutations } from 'vuex'
+import { mapActions, mapState, mapMutations } from 'vuex'
 import Room from './room.vue'
 import Loading from './loading.vue'
 import { isIOSDevice } from 'ios-detector'
@@ -60,8 +60,6 @@ export default {
       'nameToIdMap',
       'refreshPromise',
     ]),
-
-    ...mapGetters(['initPromise']),
   },
 
   async mounted () {

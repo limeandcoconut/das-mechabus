@@ -39,9 +39,10 @@ export default {
     position: relative;
     top: 1px;
     left: 1px;
-    width: calc(100% - 2px);
-    height: calc(100% - 2px);
-    padding-bottom: 2px;
+    width: 100%;
+    height: 100%;
+    margin-right: 2px;
+    margin-bottom: 2px;
     color: @magenta;
   }
 
@@ -66,6 +67,8 @@ export default {
     left: 1px;
     right: 1px;
     bottom: 1px;
+    width: 100%;
+    height: 100%;
     width: calc(100% - 2px);
     height: calc(100% - 2px);
     z-index: -1;
@@ -80,7 +83,7 @@ export default {
     border-bottom: 10px solid;
     border-color: @pink-sherbet;
     transform: translate3d(0%, calc(-100% - 4px), 0);
-    transition:none;
+    transition: none;
     z-index: -1;
 
     &:nth-child(2) {

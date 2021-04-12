@@ -9,35 +9,56 @@
       Error: Incoherent State
     </div>
 
-    <input type="radio" id="dump" name="mode" value="dump"
+    <RadioInput
+      name="mode"
+      value="dump"
       :checked="mode === 'dump'"
+      class="input"
       @click="setMode('dump')">
-    <label for="dump">Dump</label>
-    <input type="radio" id="fill" name="mode" value="fill"
+      Dump
+    </RadioInput>
+
+    <RadioInput
+      name="mode"
+      value="fill"
       :checked="mode === 'fill'"
+      class="input"
       @click="setMode('fill')">
-    <label for="fill">Fill</label>
-    <input type="radio" id="pump" name="mode" value="pump"
+      Fill
+    </RadioInput>
+
+    <RadioInput
+      name="mode"
+      value="pump"
       :checked="mode === 'pump'"
+      class="input"
       @click="setMode('pump')">
-    <label for="pump">Pump</label>
-    <input type="radio" id="city" name="mode" value="city"
+      Pump
+    </RadioInput>
+
+    <RadioInput
+      name="mode"
+      value="city"
       :checked="mode === 'city'"
+      class="input"
       @click="setMode('city')">
-    <label for="city">City</label>
+      City
+    </RadioInput>
 
   </div>
 </template>
 
 <script>
-import { mapActions, mapState, mapGetters, mapMutations } from 'vuex'
+import { mapActions, mapState, mapMutations } from 'vuex'
 import Loading from './loading.vue'
+import RadioInput from './radio-input.vue'
 
 export default {
   name: 'water-system',
 
   components: {
     Loading,
+    RadioInput,
   },
 
   data () {
@@ -82,8 +103,6 @@ export default {
       'nameToIdMap',
       'refreshPromise',
     ]),
-
-    ...mapGetters(['initPromise']),
   },
 
   async mounted () {
@@ -93,7 +112,6 @@ export default {
 
   methods: {
     setMode (mode) {
-      this.mode = mode
       if (mode === 'dump') {
         this.setController('dump', 1)
         this.setController('fill', 0)
@@ -152,13 +170,20 @@ export default {
   position: relative;
   display: flex;
   flex-direction: column;
-  border-radius: .basis(2)[];
   border: 4px solid @blue;
   overflow: hidden;
+  padding-top: .5rem;
+  padding-right: .5rem;
+  padding-left: .5rem;
+  height: 100%;
 }
 
 .error {
   background-color: @magenta;
+}
+
+.input {
+  margin-bottom: 0.25rem;
 }
 
 </style>
