@@ -2,7 +2,7 @@
   <Loading
     v-if="!loaded"
   />
-  <div v-else-if="!getController('dump') &&  !getController('fill') && !getController('pump')"
+  <div v-else-if="(!getController('dump') &&  !getController('fill') && !getController('pump')) || !mode"
     class="error">
     Error: Incoherent State
   </div>
@@ -67,17 +67,14 @@ export default {
       ) {
         return 'pump'
       } else if (
-        // If the state is incoherent then default it to 'city'
-        !(
-          !this.controllerState('dump') &&
-          !this.controllerState('fill') &&
-          !this.controllerState('pump')
-        )
+        !this.controllerState('dump') &&
+        !this.controllerState('fill') &&
+        !this.controllerState('pump')
       ) {
-      // This might not belong here
-        this.setMode('city')
+        return 'city'
       }
-      return 'city'
+
+      return null
     },
 
     ...mapState([
