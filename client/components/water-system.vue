@@ -1,6 +1,6 @@
 <template>
   <Loading
-    v-if="!loaded"
+    v-if="!loaded || spinning"
   />
   <div v-else
     class="water-system">
@@ -64,6 +64,7 @@ export default {
   data () {
     return {
       loaded: false,
+      spinning: false,
     }
   },
 
@@ -112,6 +113,11 @@ export default {
 
   methods: {
     setMode (mode) {
+      this.spinning = true
+      setTimeout(() => {
+        this.spinning = false
+      }, 500)
+
       if (mode === 'dump') {
         this.setController('dump', 1)
         this.setController('fill', 0)

@@ -14,9 +14,9 @@ Vue.use(VueAnalytics, {
 if (isProd() && 'serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('/service-worker.js')
-    .then((registration) => {
+    .then(registration => {
       console.log('ServiceWorker registration successful with scope: ', registration.scope)
-    }, (error) => {
+    }, error => {
       console.log('ServiceWorker registration failed: ', error)
     })
   })
